@@ -9,5 +9,7 @@ namespace MyRecipes.Services.Interfaces
         List<Recipe> GetAllRecipes();
 
         Recipe GetRecipeById(int id);
+
+        void CreateRecipe(Recipe recipe);
     }
 }

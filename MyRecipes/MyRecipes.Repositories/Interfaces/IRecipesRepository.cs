@@ -7,5 +7,6 @@ namespace MyRecipes.Repositories.Interfaces
     {
         List<Recipe> GetAll();
         Recipe GetById(int id);
+        void Add(Recipe recipe);
     }
 }

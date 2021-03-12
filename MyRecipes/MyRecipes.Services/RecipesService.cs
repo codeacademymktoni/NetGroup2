@@ -22,5 +22,10 @@ namespace MyRecipes.Services
         {
             return _recipeRepository.GetById(id);
         }
+
+        public void CreateRecipe(Recipe recipe)
+        {
+            _recipeRepository.Add(recipe);
+        }
     }
 }

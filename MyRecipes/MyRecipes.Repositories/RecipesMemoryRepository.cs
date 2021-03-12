@@ -7,11 +7,11 @@ using System.Text;
 
 namespace MyRecipes.Repositories
 {
-    public class RecipesRepository : IRecipesRepository
+    public class RecipesMemoryRepository : IRecipesRepository
     {
         public List<Recipe> Recipes { get; set; }
 
-        public RecipesRepository()
+        public RecipesMemoryRepository()
         {
             var recipe1 = new Recipe()
             {
@@ -44,6 +44,11 @@ namespace MyRecipes.Repositories
         public Recipe GetById(int id)
         {
             return Recipes.FirstOrDefault(x => x.Id == id);
+        }
+
+        public void Add(Recipe recipe)
+        {
+            Recipes.Add(recipe);
         }
     }
 }

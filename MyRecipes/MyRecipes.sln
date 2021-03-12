@@ -5,11 +5,11 @@ VisualStudioVersion = 16.0.30621.155
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "MyRecipes", "MyRecipes\MyRecipes.csproj", "{B532A660-14FD-4406-810C-F4B64F968B45}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MyRecipes.Services", "MyRecipes.Services\MyRecipes.Services.csproj", "{D1DF18DB-7D2D-4F0D-9AFB-94DE6E5137D6}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "MyRecipes.Services", "MyRecipes.Services\MyRecipes.Services.csproj", "{D1DF18DB-7D2D-4F0D-9AFB-94DE6E5137D6}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MyRecipes.Models", "MyRecipes.Models\MyRecipes.Models.csproj", "{AA94A48C-AAEE-4A1A-88E8-594E077153D7}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "MyRecipes.Models", "MyRecipes.Models\MyRecipes.Models.csproj", "{AA94A48C-AAEE-4A1A-88E8-594E077153D7}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MyRecipes.Repositories", "MyRecipes.Repositories\MyRecipes.Repositories.csproj", "{10BA439D-FCA9-4352-9D93-A0A1A7928CB6}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "MyRecipes.Repositories", "MyRecipes.Repositories\MyRecipes.Repositories.csproj", "{10BA439D-FCA9-4352-9D93-A0A1A7928CB6}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

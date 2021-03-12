@@ -1,4 +1,7 @@
-﻿@model List<MyRecipes.Models.Recipe>
+﻿@addTagHelper *,Microsoft.AspNetCore.Mvc.TagHelpers
+
+
+@model List<MyRecipes.Models.Recipe>
 
 @{
     ViewBag.Title = "Overview";
@@ -14,7 +17,7 @@
                 <div class="card-body">
                     <h5 class="card-title">@recipe.Title</h5>
                     <p class="card-text">@recipe.Description</p>
-                    <a href="/Recipes/Details/@recipe.Id" class="btn btn-primary">See more...</a>
+                    <a asp-controller="Recipes" asp-action="Details" asp-route-id="@recipe.Id" class="btn btn-primary">See more...</a>
                 </div>
             </div>
         </div>
