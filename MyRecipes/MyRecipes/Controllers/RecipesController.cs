@@ -1,16 +1,15 @@
 ﻿using Microsoft.AspNetCore.Mvc;
-using MyRecipes.Services;
-using System.Linq;
+using MyRecipes.Services.Interfaces;
 
 namespace MyRecipes.Controllers
 {
     public class RecipesController : Controller
     {
-        private RecipesService _service{ get; set; }
+        private IRecipesService _service{ get; set; }
 
-        public RecipesController()
+        public RecipesController(IRecipesService service)
         {
-            _service = new RecipesService();
+            _service = service;
         }
 
         public IActionResult Overview()
@@ -34,10 +33,8 @@ namespace MyRecipes.Controllers
             }
             catch (System.Exception ex)
             {
-
                 return RedirectToAction("ErrorGeneral", "Info");
             }
-           
         }
     }
 }

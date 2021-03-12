@@ -4,10 +4,13 @@ using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
-using Microsoft.AspNetCore.HttpsPolicy;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
+using MyRecipes.Repositories;
+using MyRecipes.Repositories.Interfaces;
+using MyRecipes.Services;
+using MyRecipes.Services.Interfaces;
 
 namespace MyRecipes
 {
@@ -24,6 +27,8 @@ namespace MyRecipes
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddControllersWithViews();
+            services.AddTransient<IRecipesService, RecipesService>();
+            services.AddTransient<IRecipesRepository, RecipesFileRepository>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

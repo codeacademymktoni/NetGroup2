@@ -1,4 +1,5 @@
 ﻿using MyRecipes.Models;
+using MyRecipes.Repositories.Interfaces;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -6,7 +7,7 @@ using System.Text;
 
 namespace MyRecipes.Repositories
 {
-    public class RecipesRepository
+    public class RecipesRepository : IRecipesRepository
     {
         public List<Recipe> Recipes { get; set; }
 

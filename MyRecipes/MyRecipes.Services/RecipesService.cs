@@ -1,16 +1,16 @@
 ﻿using MyRecipes.Models;
-using MyRecipes.Repositories;
+using MyRecipes.Repositories.Interfaces;
+using MyRecipes.Services.Interfaces;
 using System.Collections.Generic;
-using System.Linq;
 
 namespace MyRecipes.Services
 {
-    public class RecipesService
+    public class RecipesService : IRecipesService
     {
-        private RecipesRepository _recipeRepository { get; set; }
-        public RecipesService()
+        private IRecipesRepository _recipeRepository { get; set; }
+        public RecipesService(IRecipesRepository recipesRepository)
         {
-            _recipeRepository = new RecipesRepository();
+            _recipeRepository = recipesRepository;
         }
 
         public List<Recipe> GetAllRecipes()
