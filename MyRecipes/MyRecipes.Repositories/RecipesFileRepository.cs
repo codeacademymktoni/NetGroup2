@@ -58,5 +58,10 @@ namespace MyRecipes.Repositories
             var serialzed = JsonConvert.SerializeObject(Recipes);
             File.WriteAllText(Path, serialzed);
         }
+
+        public List<Recipe> GetByTitle(string title)
+        {
+            throw new System.NotImplementedException();
+        }
     }
 }

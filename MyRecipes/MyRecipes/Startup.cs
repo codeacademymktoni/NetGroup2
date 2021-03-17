@@ -4,6 +4,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
@@ -26,9 +27,24 @@ namespace MyRecipes
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
+            //Install ef core
+            //Install ef core sql server
+            //Install ef core tools 
+
+            //create db context class that inherits from DbContext
+            //add constructor in db context class
+            //    public MyRecipesDbContext(DbContextOptions<MyRecipesDbContext> options): base(options)
+            //{ }
+
+            //configure in startup
+            //see configuration below 
+            services.AddDbContext<MyRecipesDbContext>(
+                    x => x.UseSqlServer("Server=(localdb)\\MSSQLLocalDB;Database=MyRecipes;Trusted_Connection=True;")
+                );
+
             services.AddControllersWithViews();
             services.AddTransient<IRecipesService, RecipesService>();
-            services.AddTransient<IRecipesRepository, RecipesSqlRepository>();
+            services.AddTransient<IRecipesRepository, RecipesRepository>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

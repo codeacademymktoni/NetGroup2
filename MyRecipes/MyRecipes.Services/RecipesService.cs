@@ -27,5 +27,17 @@ namespace MyRecipes.Services
         {
             _recipeRepository.Add(recipe);
         }
+
+        public List<Recipe> GetRecipesByTitle(string title)
+        {
+            if (title == null) 
+            {
+                return _recipeRepository.GetAll();
+            }
+            else
+            {
+                return _recipeRepository.GetByTitle(title);
+            }
+        }
     }
 }

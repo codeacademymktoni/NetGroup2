@@ -1,4 +1,5 @@
 ﻿
+using System;
 using System.ComponentModel.DataAnnotations;
 
 namespace MyRecipes.Models
@@ -22,5 +23,8 @@ namespace MyRecipes.Models
 
         [Required]
         public string Description { get; set; }
+
+        [Required]
+        public DateTime DateCreated{ get; set; }
     }
 }

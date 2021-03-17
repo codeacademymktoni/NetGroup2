@@ -50,5 +50,10 @@ namespace MyRecipes.Repositories
         {
             Recipes.Add(recipe);
         }
+
+        public List<Recipe> GetByTitle(string title)
+        {
+            throw new NotImplementedException();
+        }
     }
 }

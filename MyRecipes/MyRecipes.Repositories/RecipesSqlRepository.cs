@@ -70,7 +70,6 @@ namespace MyRecipes.Repositories
                     recipe.Ingredients = reader.GetString(3);
                     recipe.Directions = reader.GetString(4);
                     recipe.Description = reader.GetString(5);
-
                     result.Add(recipe);
                 }
             }
@@ -86,9 +85,9 @@ namespace MyRecipes.Repositories
             {
                 cnn.Open();
 
-                var query = $"select * from recipes where title = @Title";
+                var query = $"select * from recipes where title like @Title";
                 var cmd = new SqlCommand(query, cnn);
-                cmd.Parameters.AddWithValue("@Title", title);
+                cmd.Parameters.AddWithValue("@Title", $"%{title}%");
                 var reader = cmd.ExecuteReader();
 
                 while (reader.Read())

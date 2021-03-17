@@ -8,6 +8,8 @@ namespace MyRecipes.Services.Interfaces
     {
         List<Recipe> GetAllRecipes();
 
+        List<Recipe> GetRecipesByTitle(string title);
+
         Recipe GetRecipeById(int id);
 
         void CreateRecipe(Recipe recipe);

@@ -6,16 +6,16 @@ namespace MyRecipes.Controllers
 {
     public class RecipesController : Controller
     {
-        private IRecipesService _service{ get; set; }
+        private IRecipesService _service { get; set; }
 
         public RecipesController(IRecipesService service)
         {
             _service = service;
         }
 
-        public IActionResult Overview()
+        public IActionResult Overview(string title)
         {
-            var recipes = _service.GetAllRecipes();
+            var recipes = _service.GetRecipesByTitle(title);
             return View(recipes);
         }
 
