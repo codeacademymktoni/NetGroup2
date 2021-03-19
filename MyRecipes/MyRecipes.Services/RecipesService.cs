@@ -1,6 +1,8 @@
-﻿using MyRecipes.Models;
+﻿using MyRecipes.Common.Exceptions;
+using MyRecipes.Models;
 using MyRecipes.Repositories.Interfaces;
 using MyRecipes.Services.Interfaces;
+using System;
 using System.Collections.Generic;
 
 namespace MyRecipes.Services
@@ -37,6 +39,20 @@ namespace MyRecipes.Services
             else
             {
                 return _recipeRepository.GetByTitle(title);
+            }
+        }
+
+        public void Delete(int id)
+        {
+            var recipe = _recipeRepository.GetById(id);
+
+            if(recipe == null)
+            {
+                throw new NotFoundException($"The recipe with id {id} was not found");
+            }
+            else
+            {
+                _recipeRepository.Delete(recipe);
             }
         }
     }

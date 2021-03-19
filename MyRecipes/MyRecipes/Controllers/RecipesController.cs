@@ -1,6 +1,8 @@
 ﻿using Microsoft.AspNetCore.Mvc;
+using MyRecipes.Common.Exceptions;
 using MyRecipes.Models;
 using MyRecipes.Services.Interfaces;
+using System;
 
 namespace MyRecipes.Controllers
 {
@@ -19,6 +21,14 @@ namespace MyRecipes.Controllers
             return View(recipes);
         }
 
+        public IActionResult ManageOverview(string errorMessage, string successMessage)
+        {
+            ViewBag.ErrorMessage = errorMessage;
+            ViewBag.SuccessMessage = successMessage;
+            var recipes = _service.GetAllRecipes();
+            return View(recipes);
+        }
+
         public IActionResult Details(int id)
         {
             try
@@ -29,7 +39,7 @@ namespace MyRecipes.Controllers
                 {
                     return RedirectToAction("ErrorNotFound", "Info");
                 }
-
+                
                 return View(recipe);
             }
             catch (System.Exception ex)
@@ -50,10 +60,27 @@ namespace MyRecipes.Controllers
             if (ModelState.IsValid)
             {
                 _service.CreateRecipe(recipe);
-                return RedirectToAction("Overview");
+                return RedirectToAction("ManageOverview", new { SuccessMessage = "Recipe created sucessfully"});
             }
 
             return View(recipe);
+        }
+
+        public IActionResult Delete(int id)
+        {
+            try
+            {
+                _service.Delete(id);
+                return RedirectToAction("ManageOverview", new { SuccessMessage = "Recipe deleted sucessfully"});
+            }
+            catch (NotFoundException ex)
+            {
+                return RedirectToAction("ManageOverview", new { ErrorMessage = ex.Message });
+            }
+            catch (Exception ex)
+            {
+                return RedirectToAction("InternalError", "Info");
+            }
         }
     }
 }

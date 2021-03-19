@@ -17,5 +17,16 @@ namespace MyRecipes.Controllers
         {
             return View();
         }
+
+        public IActionResult ActionNonSuccessful(string message)
+        {
+            ViewBag.Message = message;
+            return View();
+        }
+
+        public IActionResult InternalError()
+        {
+            return View();
+        }
     }
 }
