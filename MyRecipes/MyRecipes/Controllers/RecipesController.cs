@@ -82,5 +82,41 @@ namespace MyRecipes.Controllers
                 return RedirectToAction("InternalError", "Info");
             }
         }
+
+        [HttpGet]
+        public IActionResult Update(int id)
+        {
+            var recipe = _service.GetRecipeById(id);
+
+            if (recipe == null)
+            {
+                return RedirectToAction("ManageOverview", new { ErrorMessage = "Recipe not found" });
+            }
+
+            return View(recipe);
+        }
+
+        [HttpPost]
+        public IActionResult Update(Recipe recipe)
+        {
+            if (ModelState.IsValid)
+            {
+                try
+                {
+                    _service.Update(recipe);
+                    return RedirectToAction("ManageOverview", new { SuccessMessage = "Recipe updated successfuly" });
+                }
+                catch (NotFoundException ex)
+                {
+                    return RedirectToAction("ManageOverview", new { ErrorMessage = ex.Message });
+                }
+                catch (Exception ex)
+                {
+                    return RedirectToAction("InternalError", "Info");
+                }
+            }
+
+            return View(recipe);
+        }
     }
 }

@@ -27,6 +27,7 @@ namespace MyRecipes.Services
 
         public void CreateRecipe(Recipe recipe)
         {
+            recipe.DateCreated = DateTime.Now;
             _recipeRepository.Add(recipe);
         }
 
@@ -53,6 +54,27 @@ namespace MyRecipes.Services
             else
             {
                 _recipeRepository.Delete(recipe);
+            }
+        }
+
+        public void Update(Recipe recipe)
+        {
+            var updatedRecipe = _recipeRepository.GetById(recipe.Id);
+
+            if (updatedRecipe != null)
+            {
+                updatedRecipe.Title = recipe.Title;
+                updatedRecipe.ImageUrl = recipe.ImageUrl;
+                updatedRecipe.Description = recipe.Description;
+                updatedRecipe.Directions = recipe.Directions;
+                updatedRecipe.Ingredients = recipe.Ingredients;
+                updatedRecipe.DateModified = DateTime.Now;
+
+                _recipeRepository.Update(updatedRecipe);
+            }
+            else
+            {
+                throw new NotFoundException($"The recipe with id {recipe.Id} was not found");
             }
         }
     }

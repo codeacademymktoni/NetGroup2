@@ -26,5 +26,7 @@ namespace MyRecipes.Models
 
         [Required]
         public DateTime DateCreated{ get; set; }
+
+        public DateTime? DateModified { get; set; }
     }
 }
