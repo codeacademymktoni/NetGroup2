@@ -1,4 +1,4 @@
-﻿@model MyRecipes.Models.Recipe
+﻿@model MyRecipes.ViewModels.RecipeDetailsModel
 
 @{
     ViewBag.Title = "Details";
@@ -17,3 +17,5 @@
 
 <h2>Ingredients</h2>
 <p>@Model.Ingredients</p>
+
+<h2> Date created: @Model.DateCreated</h2>

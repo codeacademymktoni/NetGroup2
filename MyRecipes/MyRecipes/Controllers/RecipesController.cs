@@ -1,8 +1,12 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using MyRecipes.Common.Exceptions;
+using MyRecipes.Mappings;
 using MyRecipes.Models;
 using MyRecipes.Services.Interfaces;
+using MyRecipes.ViewModels;
 using System;
+using System.Collections.Generic;
+using System.Linq;
 
 namespace MyRecipes.Controllers
 {
@@ -18,7 +22,10 @@ namespace MyRecipes.Controllers
         public IActionResult Overview(string title)
         {
             var recipes = _service.GetRecipesByTitle(title);
-            return View(recipes);
+
+            var recipeOverviewModels = recipes.Select(x => x.ToOverviewModel()).ToList();
+
+            return View(recipeOverviewModels);
         }
 
         public IActionResult ManageOverview(string errorMessage, string successMessage)
@@ -26,7 +33,10 @@ namespace MyRecipes.Controllers
             ViewBag.ErrorMessage = errorMessage;
             ViewBag.SuccessMessage = successMessage;
             var recipes = _service.GetAllRecipes();
-            return View(recipes);
+
+            var viewModels = recipes.Select(x => x.ToManageOverviewModel()).ToList();
+
+            return View(viewModels);
         }
 
         public IActionResult Details(int id)
@@ -40,7 +50,7 @@ namespace MyRecipes.Controllers
                     return RedirectToAction("ErrorNotFound", "Info");
                 }
                 
-                return View(recipe);
+                return View(recipe.ToDetailsModel());
             }
             catch (System.Exception ex)
             {
@@ -55,11 +65,12 @@ namespace MyRecipes.Controllers
         }
 
         [HttpPost]
-        public IActionResult Create(Recipe recipe)
+        public IActionResult Create(RecipeCreateModel recipe)
         {
             if (ModelState.IsValid)
             {
-                _service.CreateRecipe(recipe);
+                var domainModel = recipe.ToModel();
+                _service.CreateRecipe(domainModel);
                 return RedirectToAction("ManageOverview", new { SuccessMessage = "Recipe created sucessfully"});
             }
 
@@ -93,17 +104,17 @@ namespace MyRecipes.Controllers
                 return RedirectToAction("ManageOverview", new { ErrorMessage = "Recipe not found" });
             }
 
-            return View(recipe);
+            return View(recipe.ToUpdateModel());
         }
-
-        [HttpPost]
-        public IActionResult Update(Recipe recipe)
+        
+        [HttpPost] 
+        public IActionResult Update(RecipeUpdateModel recipe)
         {
-            if (ModelState.IsValid)
+            if (ModelState.IsValid)  
             {
                 try
                 {
-                    _service.Update(recipe);
+                    _service.Update(recipe.ToModel());
                     return RedirectToAction("ManageOverview", new { SuccessMessage = "Recipe updated successfuly" });
                 }
                 catch (NotFoundException ex)
