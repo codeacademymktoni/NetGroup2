@@ -1,6 +1,7 @@
 ﻿using MyRecipes.Common.Exceptions;
 using MyRecipes.Models;
 using MyRecipes.Repositories.Interfaces;
+using MyRecipes.Services.DtoModels;
 using MyRecipes.Services.Interfaces;
 using System;
 using System.Collections.Generic;
@@ -43,22 +44,28 @@ namespace MyRecipes.Services
             }
         }
 
-        public void Delete(int id)
+        public StatusModel Delete(int id)
         {
+            var response = new StatusModel();
             var recipe = _recipeRepository.GetById(id);
 
             if(recipe == null)
             {
-                throw new NotFoundException($"The recipe with id {id} was not found");
+                response.IsSuccessful = false;
+                response.Message = $"The recipe with id {id} was not found";
             }
             else
             {
                 _recipeRepository.Delete(recipe);
+                response.IsSuccessful = true;
             }
+
+            return response;
         }
 
-        public void Update(Recipe recipe)
+        public StatusModel Update(Recipe recipe)
         {
+            var response = new StatusModel();
             var updatedRecipe = _recipeRepository.GetById(recipe.Id);
 
             if (updatedRecipe != null)
@@ -71,11 +78,15 @@ namespace MyRecipes.Services
                 updatedRecipe.DateModified = DateTime.Now;
 
                 _recipeRepository.Update(updatedRecipe);
+                response.IsSuccessful = true;
             }
             else
             {
-                throw new NotFoundException($"The recipe with id {recipe.Id} was not found");
+                response.IsSuccessful = false;
+                response.Message = $"The recipe with id {recipe.Id} was not found";
             }
+
+            return response;
         }
     }
 }

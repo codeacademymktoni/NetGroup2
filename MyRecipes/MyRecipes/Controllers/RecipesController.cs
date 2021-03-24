@@ -1,11 +1,8 @@
 ﻿using Microsoft.AspNetCore.Mvc;
-using MyRecipes.Common.Exceptions;
 using MyRecipes.Mappings;
-using MyRecipes.Models;
 using MyRecipes.Services.Interfaces;
 using MyRecipes.ViewModels;
 using System;
-using System.Collections.Generic;
 using System.Linq;
 
 namespace MyRecipes.Controllers
@@ -81,12 +78,16 @@ namespace MyRecipes.Controllers
         {
             try
             {
-                _service.Delete(id);
-                return RedirectToAction("ManageOverview", new { SuccessMessage = "Recipe deleted sucessfully"});
-            }
-            catch (NotFoundException ex)
-            {
-                return RedirectToAction("ManageOverview", new { ErrorMessage = ex.Message });
+                var response = _service.Delete(id);
+
+                if (response.IsSuccessful)
+                {
+                    return RedirectToAction("ManageOverview", new { SuccessMessage = "Recipe deleted sucessfully"});
+                }
+                else
+                {
+                    return RedirectToAction("ManageOverview", new { ErrorMessage = response.Message });
+                }
             }
             catch (Exception ex)
             {
@@ -114,12 +115,16 @@ namespace MyRecipes.Controllers
             {
                 try
                 {
-                    _service.Update(recipe.ToModel());
-                    return RedirectToAction("ManageOverview", new { SuccessMessage = "Recipe updated successfuly" });
-                }
-                catch (NotFoundException ex)
-                {
-                    return RedirectToAction("ManageOverview", new { ErrorMessage = ex.Message });
+                    var response = _service.Update(recipe.ToModel());
+
+                    if (response.IsSuccessful)
+                    {
+                        return RedirectToAction("ManageOverview", new { SuccessMessage = "Recipe updated successfuly" });
+                    }
+                    else
+                    {
+                        return RedirectToAction("ManageOverview", new { ErrorMessage = response.Message });
+                    }
                 }
                 catch (Exception ex)
                 {

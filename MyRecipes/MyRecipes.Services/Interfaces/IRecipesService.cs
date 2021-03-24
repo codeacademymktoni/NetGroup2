@@ -1,5 +1,6 @@
 ﻿
 using MyRecipes.Models;
+using MyRecipes.Services.DtoModels;
 using System.Collections.Generic;
 
 namespace MyRecipes.Services.Interfaces
@@ -14,7 +15,7 @@ namespace MyRecipes.Services.Interfaces
 
         void CreateRecipe(Recipe recipe);
 
-        void Delete(int id);
-        void Update(Recipe recipe);
+        StatusModel Delete(int id);
+        StatusModel Update(Recipe recipe);
     }
 }
