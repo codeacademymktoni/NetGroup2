@@ -2,6 +2,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.EntityFrameworkCore;
@@ -33,9 +34,16 @@ namespace MyRecipes
                     x => x.UseSqlServer("Server=(localdb)\\MSSQLLocalDB;Database=MyRecipes;Trusted_Connection=True;")
                 );
 
+            services.AddAuthentication(CookieAuthenticationDefaults.AuthenticationScheme).AddCookie();
+
+            //register services
             services.AddControllersWithViews().AddRazorRuntimeCompilation();
             services.AddTransient<IRecipesService, RecipesService>();
+            services.AddTransient<IAuthService, AuthService>();
+
+            //register repositories
             services.AddTransient<IRecipesRepository, RecipesRepository>();
+            services.AddTransient<IUsersRepository, UsersRepository>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -56,8 +64,8 @@ namespace MyRecipes
 
             app.UseRouting();
 
+            app.UseAuthentication();
             app.UseAuthorization();
-
             app.UseEndpoints(endpoints =>
             {
                 endpoints.MapControllerRoute(

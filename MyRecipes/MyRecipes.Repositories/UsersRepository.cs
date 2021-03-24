@@ -1,10 +1,10 @@
 ﻿using MyRecipes.Models;
-using System.Collections.Generic;
+using MyRecipes.Repositories.Interfaces;
 using System.Linq;
 
 namespace MyRecipes.Repositories
 {
-    public class UsersRepository
+    public class UsersRepository : IUsersRepository
     {
         private readonly MyRecipesDbContext _context;
 
@@ -13,9 +13,9 @@ namespace MyRecipes.Repositories
             _context = context;
         }
 
-        public List<User> GetAll()
+        public User GetByUsername(string username)
         {
-            return _context.Users.ToList();
+            return _context.Users.FirstOrDefault(x => x.Username == username);
         }
     }
 }

@@ -7,6 +7,7 @@ using System.Linq;
 
 namespace MyRecipes.Controllers
 {
+    
     public class RecipesController : Controller
     {
         private IRecipesService _service { get; set; }
@@ -25,6 +26,7 @@ namespace MyRecipes.Controllers
             return View(recipeOverviewModels);
         }
 
+        
         public IActionResult ManageOverview(string errorMessage, string successMessage)
         {
             ViewBag.ErrorMessage = errorMessage;

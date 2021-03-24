@@ -22,9 +22,22 @@
                     <li class="nav-item">
                         <a class="nav-link" href="/Info/ContactUs">Contact Us</a>
                     </li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="/Recipes/ManageOverview">Manage Recipes</a>
-                    </li>
+                    @if (User.Identity.IsAuthenticated)
+                    {
+                        <li class="nav-item">
+                            <a class="nav-link" href="/Recipes/ManageOverview">Manage Recipes</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="#">@User.FindFirst("Username").Value</a>
+                        </li>
+                    }
+                    else
+                    {
+                        <li class="nav-item">
+                            <a class="nav-link" href="/Auth/SignIn">Sign In</a>
+                        </li>
+                    }
+
                 </ul>
             </div>
         </nav>
