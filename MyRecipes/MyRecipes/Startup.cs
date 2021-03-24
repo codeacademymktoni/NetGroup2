@@ -42,7 +42,7 @@ namespace MyRecipes
                     x => x.UseSqlServer("Server=(localdb)\\MSSQLLocalDB;Database=MyRecipes;Trusted_Connection=True;")
                 );
 
-            services.AddControllersWithViews();
+            services.AddControllersWithViews().AddRazorRuntimeCompilation();
             services.AddTransient<IRecipesService, RecipesService>();
             services.AddTransient<IRecipesRepository, RecipesRepository>();
         }
