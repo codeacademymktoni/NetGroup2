@@ -34,12 +34,17 @@ namespace MyRecipes
                     x => x.UseSqlServer("Server=(localdb)\\MSSQLLocalDB;Database=MyRecipes;Trusted_Connection=True;")
                 );
 
-            services.AddAuthentication(CookieAuthenticationDefaults.AuthenticationScheme).AddCookie();
+            services.AddAuthentication(CookieAuthenticationDefaults.AuthenticationScheme).AddCookie(
+                    options => {
+                        options.ExpireTimeSpan = TimeSpan.FromDays(30);
+                    }
+                );
 
             //register services
             services.AddControllersWithViews().AddRazorRuntimeCompilation();
             services.AddTransient<IRecipesService, RecipesService>();
             services.AddTransient<IAuthService, AuthService>();
+            services.AddTransient<IUsersService, UsersService>();
 
             //register repositories
             services.AddTransient<IRecipesRepository, RecipesRepository>();

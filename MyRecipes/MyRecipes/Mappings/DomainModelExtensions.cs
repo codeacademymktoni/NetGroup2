@@ -50,5 +50,15 @@ namespace MyRecipes.Mappings
                 Ingredients = recipe.Ingredients
             };
         }
+
+        public static UserDetailsModel ToDetailsModel(this User user)
+        {
+            return new UserDetailsModel()
+            {
+                Address = user.Address,
+                Email = user.Email,
+                Username  = user.Username
+            };
+        }
     }
 }

@@ -13,6 +13,11 @@ namespace MyRecipes.Repositories
             _context = context;
         }
 
+        public User GetById(int userId)
+        {
+            return _context.Users.FirstOrDefault(x => x.Id == userId);
+        }
+
         public User GetByUsername(string username)
         {
             return _context.Users.FirstOrDefault(x => x.Username == username);

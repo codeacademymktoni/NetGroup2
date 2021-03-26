@@ -28,7 +28,10 @@
                             <a class="nav-link" href="/Recipes/ManageOverview">Manage Recipes</a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link" href="#">@User.FindFirst("Username").Value</a>
+                            <a class="nav-link" href="/Users/Details">@User.FindFirst("Username").Value</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="/Auth/SignOut">Sign Out</a>
                         </li>
                     }
                     else

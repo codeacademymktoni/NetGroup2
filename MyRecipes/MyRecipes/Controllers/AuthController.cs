@@ -24,7 +24,7 @@ namespace MyRecipes.Controllers
             if (ModelState.IsValid)
             {
                 
-                var response = _authService.SignIn(signInModel.Username, signInModel.Password, HttpContext);
+                var response = _authService.SignIn(signInModel.Username, signInModel.Password, signInModel.IsPersistent, HttpContext);
 
                 if (response.IsSuccessful)
                 {
@@ -38,6 +38,13 @@ namespace MyRecipes.Controllers
             }
 
             return View(signInModel);
+        }
+
+        public IActionResult SignOut()
+        {
+            //sign out
+            _authService.SignOut(HttpContext);
+            return RedirectToAction("Overview", "Recipes");
         }
     }
 }

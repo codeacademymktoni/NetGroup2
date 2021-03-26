@@ -19,6 +19,7 @@ namespace MyRecipes.Controllers
 
         public IActionResult Overview(string title)
         {
+            var user = User;
             var recipes = _service.GetRecipesByTitle(title);
 
             var recipeOverviewModels = recipes.Select(x => x.ToOverviewModel()).ToList();

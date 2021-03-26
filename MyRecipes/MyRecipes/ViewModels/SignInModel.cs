@@ -11,5 +11,7 @@ namespace MyRecipes.ViewModels
         [Required]
         //[RegularExpression(@"^(?=.*[a-z])(?=.*[A-Z])(?=.*\d).{8}$", ErrorMessage = "Password must meet requirements")]
         public string Password { get; set; }
+
+        public bool IsPersistent { get; set; }
     }
 }
