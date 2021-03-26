@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Mvc;
 using MyRecipes.Mappings;
 using MyRecipes.Services.Interfaces;
 using System;
@@ -16,6 +17,8 @@ namespace MyRecipes.Controllers
         {
             this.usersService = usersService;
         }
+
+        [Authorize]
         public IActionResult Details()
         {
             var userId = User.FindFirst("Id").Value;

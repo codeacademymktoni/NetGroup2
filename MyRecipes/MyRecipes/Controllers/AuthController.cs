@@ -15,11 +15,12 @@ namespace MyRecipes.Controllers
         [HttpGet]
         public IActionResult SignIn()
         {
+            var test = HttpContext;
             return View();
         }
 
         [HttpPost]
-        public IActionResult SignIn(SignInModel signInModel)
+        public IActionResult SignIn(SignInModel signInModel, string returnUrl)
         {
             if (ModelState.IsValid)
             {
@@ -28,7 +29,14 @@ namespace MyRecipes.Controllers
 
                 if (response.IsSuccessful)
                 {
-                    return RedirectToAction("Overview", "Recipes");
+                    if(returnUrl == null)
+                    {
+                        return RedirectToAction("Overview", "Recipes");
+                    }
+                    else
+                    {
+                        return Redirect(returnUrl);
+                    }
                 }
                 else
                 {

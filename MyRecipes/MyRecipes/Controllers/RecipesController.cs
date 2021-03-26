@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Mvc;
 using MyRecipes.Mappings;
 using MyRecipes.Services.Interfaces;
 using MyRecipes.ViewModels;
@@ -7,7 +8,7 @@ using System.Linq;
 
 namespace MyRecipes.Controllers
 {
-    
+    [Authorize]
     public class RecipesController : Controller
     {
         private IRecipesService _service { get; set; }
@@ -17,6 +18,7 @@ namespace MyRecipes.Controllers
             _service = service;
         }
 
+        [AllowAnonymous]
         public IActionResult Overview(string title)
         {
             var user = User;
@@ -27,18 +29,7 @@ namespace MyRecipes.Controllers
             return View(recipeOverviewModels);
         }
 
-        
-        public IActionResult ManageOverview(string errorMessage, string successMessage)
-        {
-            ViewBag.ErrorMessage = errorMessage;
-            ViewBag.SuccessMessage = successMessage;
-            var recipes = _service.GetAllRecipes();
-
-            var viewModels = recipes.Select(x => x.ToManageOverviewModel()).ToList();
-
-            return View(viewModels);
-        }
-
+        [AllowAnonymous]
         public IActionResult Details(int id)
         {
             try
@@ -49,13 +40,24 @@ namespace MyRecipes.Controllers
                 {
                     return RedirectToAction("ErrorNotFound", "Info");
                 }
-                
+
                 return View(recipe.ToDetailsModel());
             }
             catch (System.Exception ex)
             {
                 return RedirectToAction("ErrorGeneral", "Info");
             }
+        }
+
+        public IActionResult ManageOverview(string errorMessage, string successMessage)
+        {
+            ViewBag.ErrorMessage = errorMessage;
+            ViewBag.SuccessMessage = successMessage;
+            var recipes = _service.GetAllRecipes();
+
+            var viewModels = recipes.Select(x => x.ToManageOverviewModel()).ToList();
+
+            return View(viewModels);
         }
 
         [HttpGet]
@@ -110,7 +112,7 @@ namespace MyRecipes.Controllers
 
             return View(recipe.ToUpdateModel());
         }
-        
+
         [HttpPost] 
         public IActionResult Update(RecipeUpdateModel recipe)
         {
