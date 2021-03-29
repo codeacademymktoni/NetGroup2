@@ -29,5 +29,16 @@ namespace MyRecipes.Mappings
                 Ingredients = viewModel.Ingredients
             };
         }
+
+        public static User ToModel(this SignUpModel user)
+        {
+            return new User()
+            {
+                Password = user.Password,
+                Address = user.Address,
+                Email = user.Email,
+                Username = user.Username
+            };
+        }
     }
 }

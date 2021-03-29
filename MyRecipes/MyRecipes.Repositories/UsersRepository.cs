@@ -13,6 +13,11 @@ namespace MyRecipes.Repositories
             _context = context;
         }
 
+        public bool CheckIfExists(string username, string email)
+        {
+            return _context.Users.Any(x => x.Username == username || x.Email == email);
+        }
+
         public User GetById(int userId)
         {
             return _context.Users.FirstOrDefault(x => x.Id == userId);
@@ -21,6 +26,12 @@ namespace MyRecipes.Repositories
         public User GetByUsername(string username)
         {
             return _context.Users.FirstOrDefault(x => x.Username == username);
+        }
+
+        public void Add(User newUser)
+        {
+            _context.Users.Add(newUser);
+            _context.SaveChanges();
         }
     }
 }

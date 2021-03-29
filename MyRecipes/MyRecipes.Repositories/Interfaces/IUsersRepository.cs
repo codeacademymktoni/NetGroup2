@@ -6,5 +6,7 @@ namespace MyRecipes.Repositories.Interfaces
     {
         User GetByUsername(string username);
         User GetById(int userId);
+        bool CheckIfExists(string username, string email);
+        void Add(User newUser);
     }
 }

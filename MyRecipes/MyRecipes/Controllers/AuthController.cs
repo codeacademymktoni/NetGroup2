@@ -1,4 +1,6 @@
 ﻿using Microsoft.AspNetCore.Mvc;
+using MyRecipes.Mappings;
+using MyRecipes.Services.DtoModels;
 using MyRecipes.Services.Interfaces;
 using MyRecipes.ViewModels;
 
@@ -15,7 +17,6 @@ namespace MyRecipes.Controllers
         [HttpGet]
         public IActionResult SignIn()
         {
-            var test = HttpContext;
             return View();
         }
 
@@ -53,6 +54,33 @@ namespace MyRecipes.Controllers
             //sign out
             _authService.SignOut(HttpContext);
             return RedirectToAction("Overview", "Recipes");
+        }
+
+        [HttpGet]
+        public IActionResult SignUp()
+        {
+            return View();
+        }
+
+        [HttpPost]
+        public IActionResult SignUp(SignUpModel signUpModel)
+        {
+            if (ModelState.IsValid)
+            {
+                var response = _authService.SignUp(signUpModel.ToModel());
+
+                if (response.IsSuccessful)
+                {
+                    return RedirectToAction("SignIn");
+                }
+                else
+                {
+                    ModelState.AddModelError("", response.Message);
+                    return View(signUpModel);
+                }
+            }
+
+            return View(signUpModel);
         }
     }
 }

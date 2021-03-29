@@ -57,7 +57,6 @@ namespace MyRecipes.Services
             else
             {
                 _recipeRepository.Delete(recipe);
-                response.IsSuccessful = true;
             }
 
             return response;
@@ -78,7 +77,6 @@ namespace MyRecipes.Services
                 updatedRecipe.DateModified = DateTime.Now;
 
                 _recipeRepository.Update(updatedRecipe);
-                response.IsSuccessful = true;
             }
             else
             {

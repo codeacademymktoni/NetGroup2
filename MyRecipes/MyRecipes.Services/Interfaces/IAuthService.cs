@@ -1,4 +1,5 @@
 ﻿using Microsoft.AspNetCore.Http;
+using MyRecipes.Models;
 using MyRecipes.Services.DtoModels;
 
 namespace MyRecipes.Services.Interfaces
@@ -7,5 +8,6 @@ namespace MyRecipes.Services.Interfaces
     {
         StatusModel SignIn(string username, string password, bool isPersistent, HttpContext httpContext);
         void SignOut(HttpContext httpContext);
+        StatusModel SignUp(User user);
     }
 }

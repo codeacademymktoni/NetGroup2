@@ -1,9 +1,11 @@
 ﻿using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.AspNetCore.Http;
+using MyRecipes.Models;
 using MyRecipes.Repositories.Interfaces;
 using MyRecipes.Services.DtoModels;
 using MyRecipes.Services.Interfaces;
+using System;
 using System.Collections.Generic;
 using System.Security.Claims;
 using System.Threading.Tasks;
@@ -41,8 +43,6 @@ namespace MyRecipes.Services
                 var authProps = new AuthenticationProperties() { IsPersistent = isPersistent };
 
                 Task.Run(() => httpContext.SignInAsync(principal, authProps)).GetAwaiter().GetResult();
-
-                response.IsSuccessful = true;
             }
             else
             {
@@ -56,6 +56,33 @@ namespace MyRecipes.Services
         public void SignOut(HttpContext httpContext)
         {
             Task.Run(() => httpContext.SignOutAsync()).GetAwaiter().GetResult();
+        }
+
+        public StatusModel SignUp(User user)
+        {
+            var response = new StatusModel();
+
+            var exist = _usersRepository.CheckIfExists(user.Username, user.Email);
+
+            if (exist)
+            {
+                response.IsSuccessful = false;
+                response.Message = "User with username or email already exists";
+                return response;
+            }
+
+            var newUser = new User()
+            {
+                Username = user.Username,
+                Email = user.Email,
+                Address = user.Address,
+                Password = user.Password,
+                DateCreated = DateTime.Now
+            };
+
+            _usersRepository.Add(newUser);
+
+            return response;
         }
     }
 }

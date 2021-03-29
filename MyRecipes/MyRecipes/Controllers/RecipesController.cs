@@ -43,7 +43,7 @@ namespace MyRecipes.Controllers
 
                 return View(recipe.ToDetailsModel());
             }
-            catch (System.Exception ex)
+            catch (Exception)
             {
                 return RedirectToAction("ErrorGeneral", "Info");
             }
@@ -94,7 +94,7 @@ namespace MyRecipes.Controllers
                     return RedirectToAction("ManageOverview", new { ErrorMessage = response.Message });
                 }
             }
-            catch (Exception ex)
+            catch (Exception)
             {
                 return RedirectToAction("InternalError", "Info");
             }
@@ -131,7 +131,7 @@ namespace MyRecipes.Controllers
                         return RedirectToAction("ManageOverview", new { ErrorMessage = response.Message });
                     }
                 }
-                catch (Exception ex)
+                catch (Exception)
                 {
                     return RedirectToAction("InternalError", "Info");
                 }
