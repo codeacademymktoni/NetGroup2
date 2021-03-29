@@ -1,6 +1,5 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using MyRecipes.Mappings;
-using MyRecipes.Services.DtoModels;
 using MyRecipes.Services.Interfaces;
 using MyRecipes.ViewModels;
 
@@ -67,7 +66,8 @@ namespace MyRecipes.Controllers
         {
             if (ModelState.IsValid)
             {
-                var response = _authService.SignUp(signUpModel.ToModel());
+                var user = signUpModel.ToModel();
+                var response = _authService.SignUp(user);
 
                 if (response.IsSuccessful)
                 {
@@ -81,6 +81,11 @@ namespace MyRecipes.Controllers
             }
 
             return View(signUpModel);
+        }
+
+        public IActionResult AccessDenied()
+        {
+            return View();
         }
     }
 }

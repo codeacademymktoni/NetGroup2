@@ -8,7 +8,7 @@ using System.Linq;
 
 namespace MyRecipes.Controllers
 {
-    [Authorize]
+    [Authorize(Policy = "IsAdmin")]
     public class RecipesController : Controller
     {
         private IRecipesService _service { get; set; }

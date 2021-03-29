@@ -33,7 +33,8 @@ namespace MyRecipes.Services
                     new Claim("Id", user.Id.ToString()),
                     new Claim("Username", user.Username),
                     new Claim("Address", user.Address),
-                    new Claim("Email", user.Email)
+                    new Claim("Email", user.Email),
+                    new Claim("IsAdmin", user.IsAdmin.ToString())
                 };
 
                 var identity = new ClaimsIdentity(claims, CookieAuthenticationDefaults.AuthenticationScheme);

@@ -24,9 +24,13 @@
                     </li>
                     @if (User.Identity.IsAuthenticated)
                     {
-                        <li class="nav-item">
-                            <a class="nav-link" href="/Recipes/ManageOverview">Manage Recipes</a>
-                        </li>
+                        if (Convert.ToBoolean(User.FindFirst("IsAdmin").Value))
+                        {
+                            <li class="nav-item">
+                                <a class="nav-link" href="/Recipes/ManageOverview">Manage Recipes</a>
+                            </li>
+                        }
+
                         <li class="nav-item">
                             <a class="nav-link" href="/Users/Details">@User.FindFirst("Username").Value</a>
                         </li>
