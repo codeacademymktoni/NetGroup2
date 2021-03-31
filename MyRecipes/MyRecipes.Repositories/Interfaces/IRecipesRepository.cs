@@ -3,13 +3,8 @@ using System.Collections.Generic;
 
 namespace MyRecipes.Repositories.Interfaces
 {
-    public interface IRecipesRepository
+    public interface IRecipesRepository : IBaseRepository<Recipe>
     {
-        List<Recipe> GetAll();
         List<Recipe> GetByTitle(string title);
-        Recipe GetById(int id);
-        void Add(Recipe recipe);
-        void Delete(Recipe recipe);
-        void Update(Recipe recipe);
     }
 }
