@@ -60,5 +60,15 @@ namespace MyRecipes.Mappings
                 Username  = user.Username
             };
         }
+
+        public static UserManageOverviewModel ToManageOverviewModel(this User user)
+        {
+            return new UserManageOverviewModel()
+            {
+                Id = user.Id,
+                Username = user.Username,
+                IsAdmin = user.IsAdmin
+            };
+        }
     }
 }

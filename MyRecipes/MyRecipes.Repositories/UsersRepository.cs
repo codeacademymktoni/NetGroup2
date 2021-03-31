@@ -1,5 +1,6 @@
 ﻿using MyRecipes.Models;
 using MyRecipes.Repositories.Interfaces;
+using System.Collections.Generic;
 using System.Linq;
 
 namespace MyRecipes.Repositories
@@ -31,6 +32,23 @@ namespace MyRecipes.Repositories
         public void Add(User newUser)
         {
             _context.Users.Add(newUser);
+            _context.SaveChanges();
+        }
+
+        public List<User> GetAll()
+        {
+            return _context.Users.ToList();
+        }
+
+        public void Update(User user)
+        {
+            _context.Users.Update(user);
+            _context.SaveChanges();
+        }
+
+        public void Delete(User user)
+        {
+            _context.Users.Remove(user);
             _context.SaveChanges();
         }
     }

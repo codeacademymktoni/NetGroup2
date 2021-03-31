@@ -1,0 +1,67 @@
+﻿@model IEnumerable<MyRecipes.ViewModels.UserManageOverviewModel>
+
+@{
+    ViewData["Title"] = "ManageOverview";
+}
+
+@if (ViewBag.ErrorMessage != null)
+{
+    <div class="alert alert-danger" role="alert">
+        @ViewBag.ErrorMessage
+    </div>
+}
+
+@if (ViewBag.SuccessMessage != null)
+{
+    <div class="alert alert-success" role="alert">
+        @ViewBag.SuccessMessage
+    </div>
+}
+
+
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.Id)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Username)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.IsAdmin)
+            </th>
+            <th></th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var user in Model)
+        {
+            <tr>
+                <td>
+                    @Html.DisplayFor(modelItem => user.Id)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => user.Username)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => user.IsAdmin)
+                </td>
+                <td>
+                    @if (user.IsAdmin)
+                    {
+                        <a href="/Users/ToggleAdminRole/@user.Id" class="text-danger">Remove admin role</a>
+                    }
+                    else
+                    {
+                        <a href="/Users/ToggleAdminRole/@user.Id" class="text-success">Add admin role</a>
+                    }
+                </td>
+                <td>
+                    <a href="/Users/Delete/@user.Id" class="text-danger">Delete</a>
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>
