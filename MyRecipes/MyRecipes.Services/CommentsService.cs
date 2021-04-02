@@ -1,12 +1,11 @@
 ﻿using MyRecipes.Models;
 using MyRecipes.Repositories.Interfaces;
+using MyRecipes.Services.Interfaces;
 using System;
-using System.Collections.Generic;
-using System.Text;
 
 namespace MyRecipes.Services
 {
-    public class CommentsService
+    public class CommentsService : ICommentsService
     {
         private readonly ICommentsRepository _commentsRepository;
 
@@ -15,9 +14,17 @@ namespace MyRecipes.Services
             _commentsRepository = commentsRepository;
         }
 
-        public List<Comment> GetAll()
+        public void Add(string comment, int recipeId, int userId)
         {
-            return _commentsRepository.GetAll();
+            var newComment = new Comment()
+            {
+                Message = comment,
+                DateCreated = DateTime.Now,
+                RecipeId = recipeId,
+                UserId = userId
+            };
+
+            _commentsRepository.Add(newComment);
         }
     }
 }

@@ -31,6 +31,8 @@ namespace MyRecipes
             //configure in startup
             //see configuration below 
             services.AddDbContext<MyRecipesDbContext>(
+                    //config for lazy loading
+                    //x => x.UseLazyLoadingProxies().UseSqlServer("Server=(localdb)\\MSSQLLocalDB;Database=MyRecipes;Trusted_Connection=True;")
                     x => x.UseSqlServer("Server=(localdb)\\MSSQLLocalDB;Database=MyRecipes;Trusted_Connection=True;")
                 );
 
@@ -55,6 +57,7 @@ namespace MyRecipes
             services.AddTransient<IRecipesService, RecipesService>();
             services.AddTransient<IAuthService, AuthService>();
             services.AddTransient<IUsersService, UsersService>();
+            services.AddTransient<ICommentsService, CommentsService>();
 
             //register repositories
             services.AddTransient<IRecipesRepository, RecipesRepository>();

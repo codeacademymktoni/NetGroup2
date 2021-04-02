@@ -1,5 +1,6 @@
 ﻿using MyRecipes.Models;
 using MyRecipes.ViewModels;
+using System.Linq;
 
 namespace MyRecipes.Mappings
 {
@@ -29,12 +30,25 @@ namespace MyRecipes.Mappings
         {
             return new RecipeDetailsModel()
             {
+                Id = recipe.Id,
                 Title = recipe.Title,
                 Description = recipe.Description,
                 ImageUrl = recipe.ImageUrl,
                 Directions = recipe.Directions,
                 DateCreated = recipe.DateCreated,
-                Ingredients = recipe.Ingredients
+                Ingredients = recipe.Ingredients,
+                Comments = recipe.Comments.Select(x => x.ToCommentModel()).ToList()
+            };
+        }
+
+        public static RecipeCommentModel ToCommentModel(this Comment comment)
+        {
+            return new RecipeCommentModel
+            {
+                Id = comment.Id,
+                Message = comment.Message,
+                DateCreated = comment.DateCreated,
+                Username = comment.User.Username
             };
         }
 

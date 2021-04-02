@@ -7,7 +7,7 @@
 
 <h1>@Model.Title</h1>
 
-<img src="@Model.ImageUrl" alt="Alternate Text" style="width: 300px"/>
+<img src="@Model.ImageUrl" alt="Alternate Text" style="width: 300px" />
 
 <h2>Description</h2>
 <p>@Model.Description</p>
@@ -19,3 +19,24 @@
 <p>@Model.Ingredients</p>
 
 <h2> Date created: @Model.DateCreated</h2>
+
+<hr />
+<h3>Comments</h3>
+<hr />
+
+@if (User.Identity.IsAuthenticated)
+{
+    <form asp-controller="Comments" asp-action="Add" method="post">
+        <input type="text" name="recipeId" value="@Model.Id" hidden />
+        <div class="form-group">
+            <textarea type="text" name="comment" class="form-control" cols="20" rows="5" required></textarea>
+        </div>
+        <button type="submit" class="btn btn-primary">Comment</button>
+    </form>
+}
+
+@foreach (var comment in Model.Comments.OrderByDescending(x => x.DateCreated))
+{
+    <p>@comment.Message - @comment.Username - @comment.DateCreated</p>
+
+}

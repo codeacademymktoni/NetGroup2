@@ -1,9 +1,11 @@
 ﻿using System;
+using System.Collections.Generic;
 
 namespace MyRecipes.ViewModels
 {
     public class RecipeDetailsModel
     {
+        public int Id { get; set; }
         public string Title { get; set; }
 
         public string ImageUrl { get; set; }
@@ -15,5 +17,8 @@ namespace MyRecipes.ViewModels
         public string Description { get; set; }
 
         public DateTime DateCreated { get; set; }
+        public List<RecipeCommentModel> Comments { get; set; }
+
+
     }
 }

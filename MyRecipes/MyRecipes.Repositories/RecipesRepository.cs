@@ -1,4 +1,5 @@
-﻿using MyRecipes.Models;
+﻿using Microsoft.EntityFrameworkCore;
+using MyRecipes.Models;
 using MyRecipes.Repositories.Interfaces;
 using System.Collections.Generic;
 using System.Linq;
@@ -15,6 +16,15 @@ namespace MyRecipes.Repositories
         {
             var recipes = _context.Recipes.Where(x => x.Title.Contains(title)).ToList();
             return recipes;
+        }
+
+        public override Recipe GetById(int entityId)
+        {
+           var recipe = _context.Recipes
+                .Include(x => x.Comments)
+                    .ThenInclude(x => x.User)
+                .FirstOrDefault(x => x.Id == entityId);
+            return recipe;
         }
     }
 }

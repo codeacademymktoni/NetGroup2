@@ -41,11 +41,13 @@ namespace MyRecipes.Controllers
                     return RedirectToAction("ErrorNotFound", "Info");
                 }
 
-                return View(recipe.ToDetailsModel());
+                var viewModel = recipe.ToDetailsModel();
+
+                return View(viewModel);
             }
-            catch (Exception)
+            catch (Exception ex)
             {
-                return RedirectToAction("ErrorGeneral", "Info");
+                return RedirectToAction("InternalError", "Info");
             }
         }
 
