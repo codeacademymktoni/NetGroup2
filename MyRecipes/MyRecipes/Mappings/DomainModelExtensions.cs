@@ -13,7 +13,8 @@ namespace MyRecipes.Mappings
                 Id = recipe.Id,
                 Title = recipe.Title,
                 Description = recipe.Description,
-                ImageUrl = recipe.ImageUrl
+                ImageUrl = recipe.ImageUrl,
+                Views = recipe.Views
             };
         }
 
@@ -37,6 +38,7 @@ namespace MyRecipes.Mappings
                 Directions = recipe.Directions,
                 DateCreated = recipe.DateCreated,
                 Ingredients = recipe.Ingredients,
+                Views = recipe.Views,
                 Comments = recipe.Comments.Select(x => x.ToCommentModel()).ToList()
             };
         }

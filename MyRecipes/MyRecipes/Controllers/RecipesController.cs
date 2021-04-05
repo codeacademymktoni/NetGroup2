@@ -24,9 +24,13 @@ namespace MyRecipes.Controllers
             var user = User;
             var recipes = _service.GetRecipesByTitle(title);
 
+            var overviewDataModel = new RecipeOverviewDataModel();
+
             var recipeOverviewModels = recipes.Select(x => x.ToOverviewModel()).ToList();
 
-            return View(recipeOverviewModels);
+            overviewDataModel.OverviewRecipes = recipeOverviewModels;
+
+            return View(overviewDataModel);
         }
 
         [AllowAnonymous]
@@ -34,7 +38,7 @@ namespace MyRecipes.Controllers
         {
             try
             {
-                var recipe = _service.GetRecipeById(id);
+                var recipe = _service.GetRecipeDetails(id);
 
                 if (recipe == null)
                 {
@@ -45,7 +49,7 @@ namespace MyRecipes.Controllers
 
                 return View(viewModel);
             }
-            catch (Exception ex)
+            catch (Exception)
             {
                 return RedirectToAction("InternalError", "Info");
             }

@@ -30,6 +30,8 @@ namespace MyRecipes.Models
 
         public DateTime? DateModified { get; set; }
 
+        public int Views { get; set; }
+
         public List<Comment> Comments{ get; set; }
     }
 }

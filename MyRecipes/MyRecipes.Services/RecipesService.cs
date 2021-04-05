@@ -24,7 +24,22 @@ namespace MyRecipes.Services
         public Recipe GetRecipeById(int id)
         {
             return _recipeRepository.GetById(id);
+        }
 
+        public Recipe GetRecipeDetails(int id)
+        {
+            var recipe = GetRecipeById(id);
+
+            if(recipe == null)
+            {
+                return recipe;
+            }
+
+            recipe.Views++;
+
+            _recipeRepository.Update(recipe);
+
+            return recipe;
         }
 
         public void CreateRecipe(Recipe recipe)

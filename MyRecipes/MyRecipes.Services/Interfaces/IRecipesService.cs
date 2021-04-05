@@ -16,6 +16,9 @@ namespace MyRecipes.Services.Interfaces
         void CreateRecipe(Recipe recipe);
 
         StatusModel Delete(int id);
+
         StatusModel Update(Recipe recipe);
+
+        Recipe GetRecipeDetails(int id);
     }
 }

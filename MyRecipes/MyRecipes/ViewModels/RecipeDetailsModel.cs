@@ -17,8 +17,7 @@ namespace MyRecipes.ViewModels
         public string Description { get; set; }
 
         public DateTime DateCreated { get; set; }
+        public int Views { get; set; }
         public List<RecipeCommentModel> Comments { get; set; }
-
-
     }
 }
