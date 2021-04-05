@@ -3,6 +3,7 @@
 <head>
     <title>@ViewBag.Title</title>
     <link href="~/lib/bootstrap/dist/css/bootstrap.min.css" rel="stylesheet" />
+    @RenderSection("Styles", required: false)
 </head>
 <body>
     <div class="container-fluid">
@@ -58,5 +59,6 @@
     <div class="container">
         @RenderBody()
     </div>
+    @RenderSection("Scripts", required: false)
 </body>
 </html>

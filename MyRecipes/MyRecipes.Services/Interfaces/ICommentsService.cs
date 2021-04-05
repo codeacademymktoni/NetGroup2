@@ -1,7 +1,9 @@
-﻿namespace MyRecipes.Services.Interfaces
+﻿using MyRecipes.Services.DtoModels;
+
+namespace MyRecipes.Services.Interfaces
 {
     public interface ICommentsService
     {
-        void Add(string comment, int recipeId, int userId);
+        StatusModel Add(string comment, int recipeId, int userId);
     }
 }

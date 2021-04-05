@@ -4,7 +4,7 @@
     ViewBag.Title = "Update";
 }
 
-<form asp-controller="Recipes" asp-action="Update" method="post">
+<form asp-controller="Recipes" asp-action="Update" method="post" onsubmit="return validateForm()">
     <div class="form-group">
         <label class="control-label" asp-for="Title">Title</label>
         <input type="text" asp-for="Title" class="form-control" required />
@@ -34,3 +34,7 @@
         <input type="submit" value="Save" class="btn btn-primary" />
     </div>
 </form>
+
+@section Scripts{ 
+    <script src="~/js/validator.js"></script>
+}

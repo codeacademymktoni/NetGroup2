@@ -17,12 +17,18 @@ namespace MyRecipes.Controllers
         [Authorize]
         public IActionResult Add(CommentCreateModel commentCreateModel)
         {
-            var request = HttpContext.Request;
             var userId = int.Parse(User.FindFirst("Id").Value);
 
-            _commentsService.Add(commentCreateModel.Comment, commentCreateModel.RecipeId, userId);
+            var response = _commentsService.Add(commentCreateModel.Comment, commentCreateModel.RecipeId, userId);
 
-            return RedirectToAction("Details", "Recipes", new { id = commentCreateModel.RecipeId });
+            if (response.IsSuccessful)
+            {
+                return RedirectToAction("Details", "Recipes", new { id = commentCreateModel.RecipeId });
+            }
+            else
+            {
+                return RedirectToAction("ActionNonSuccessful", "Info", new { Message = response.Message });
+            }
         }
     }
 }
