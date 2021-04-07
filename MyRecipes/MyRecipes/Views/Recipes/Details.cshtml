@@ -50,6 +50,10 @@
                 <p>@comment.Message</p>
                 <p>User: @comment.Username</p>
                 <p>Date created: @comment.DateCreated</p>
+                @if (User.Identity.IsAuthenticated && User.FindFirst("Username").Value == comment.Username)
+                {
+                    <a href="/Comments/Delete/@comment.Id">Delete</a>
+                }
             </div>
         }
     </div>
