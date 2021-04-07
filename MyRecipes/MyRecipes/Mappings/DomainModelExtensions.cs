@@ -86,5 +86,16 @@ namespace MyRecipes.Mappings
                 IsAdmin = user.IsAdmin
             };
         }
+
+        public static RecipeSidebarModel ToRecipeSidebarModel(this Recipe recipe)
+        {
+            return new RecipeSidebarModel
+            {
+                Id = recipe.Id,
+                Title = recipe.Title,
+                Views = recipe.Views,
+                DateCreated = recipe.DateCreated
+            };
+        }
     }
 }

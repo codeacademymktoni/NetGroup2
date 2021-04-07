@@ -1,0 +1,12 @@
+﻿.recipeDescription {
+    overflow: hidden;
+    display: -webkit-box;
+    -webkit-line-clamp: 10;
+    -webkit-box-orient: vertical;
+}
+
+.recipeSidebarCard {
+    padding: 5px;
+    border: 1px solid black;
+    margin: 5px;
+}

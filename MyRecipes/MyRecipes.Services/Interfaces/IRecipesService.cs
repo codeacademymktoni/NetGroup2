@@ -20,5 +20,9 @@ namespace MyRecipes.Services.Interfaces
         StatusModel Update(Recipe recipe);
 
         Recipe GetRecipeDetails(int id);
+
+        List<Recipe> GetMostRecentRecipes(int count);
+
+        List<Recipe> GetTopRecipes(int count);
     }
 }

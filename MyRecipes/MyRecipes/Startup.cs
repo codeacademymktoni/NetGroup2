@@ -58,6 +58,7 @@ namespace MyRecipes
             services.AddTransient<IAuthService, AuthService>();
             services.AddTransient<IUsersService, UsersService>();
             services.AddTransient<ICommentsService, CommentsService>();
+            services.AddTransient<ISidebarService, SidebarService>();
 
             //register repositories
             services.AddTransient<IRecipesRepository, RecipesRepository>();

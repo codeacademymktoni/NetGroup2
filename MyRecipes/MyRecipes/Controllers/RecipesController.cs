@@ -1,9 +1,12 @@
 ﻿using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using MyRecipes.Mappings;
+using MyRecipes.Models;
+using MyRecipes.Services;
 using MyRecipes.Services.Interfaces;
 using MyRecipes.ViewModels;
 using System;
+using System.Collections.Generic;
 using System.Linq;
 
 namespace MyRecipes.Controllers
@@ -12,10 +15,12 @@ namespace MyRecipes.Controllers
     public class RecipesController : Controller
     {
         private IRecipesService _service { get; set; }
+        private ISidebarService _sidebarService { get; set; }
 
-        public RecipesController(IRecipesService service)
+        public RecipesController(IRecipesService service, ISidebarService sidebarService)
         {
             _service = service;
+            _sidebarService = sidebarService;
         }
 
         [AllowAnonymous]
@@ -27,8 +32,8 @@ namespace MyRecipes.Controllers
             var overviewDataModel = new RecipeOverviewDataModel();
 
             var recipeOverviewModels = recipes.Select(x => x.ToOverviewModel()).ToList();
-
             overviewDataModel.OverviewRecipes = recipeOverviewModels;
+            overviewDataModel.SidebarData = _sidebarService.GetSidebarData();
 
             return View(overviewDataModel);
         }
@@ -45,9 +50,13 @@ namespace MyRecipes.Controllers
                     return RedirectToAction("ErrorNotFound", "Info");
                 }
 
-                var viewModel = recipe.ToDetailsModel();
+                var recipeDetailsDataModel = new RecipeDetailsDataModel();
 
-                return View(viewModel);
+                recipeDetailsDataModel.RecipeDetails = recipe.ToDetailsModel();
+
+                recipeDetailsDataModel.SidebarData = _sidebarService.GetSidebarData();
+
+                return View(recipeDetailsDataModel);
             }
             catch (Exception)
             {

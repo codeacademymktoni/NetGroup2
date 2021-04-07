@@ -1,4 +1,4 @@
-﻿@model MyRecipes.ViewModels.RecipeDetailsModel
+﻿@model MyRecipes.ViewModels.RecipeDetailsDataModel
 
 @{
     ViewBag.Title = "Details";
@@ -6,59 +6,58 @@
 
 
 @section Styles{
-    <style>
-        .comment {
-            width: 300px;
-            padding: 10px;
-            margin: 10px;
-            border-radius: 10px;
-            box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+    <link href="~/css/details.css" rel="stylesheet" />
+    <link href="~/css/sidebar.css" rel="stylesheet" />
+}
+
+<div class="row">
+    <div class="col-md-9">
+        <h1>@Model.RecipeDetails.Title</h1>
+
+        <p>Views: @Model.RecipeDetails.Views</p>
+
+        <img src="@Model.RecipeDetails.ImageUrl" alt="Alternate Text" style="width: 300px" />
+
+        <h2>Description</h2>
+        <p>@Model.RecipeDetails.Description</p>
+
+        <h2>Directions</h2>
+        <p>@Model.RecipeDetails.Directions</p>
+
+        <h2>Ingredients</h2>
+        <p>@Model.RecipeDetails.Ingredients</p>
+
+        <h2> Date created: @Model.RecipeDetails.DateCreated</h2>
+
+        <hr />
+        <h3>Comments</h3>
+        <hr />
+
+        @if (User.Identity.IsAuthenticated)
+        {
+            <form asp-controller="Comments" asp-action="Add" method="post" onsubmit="return validateForm()">
+                <input type="text" name="recipeId" value="@Model.RecipeDetails.Id" hidden />
+                <div class="form-group">
+                    <textarea type="text" id="comment" name="comment" class="form-control" cols="20" rows="5" required></textarea>
+                </div>
+                <button type="submit" class="btn btn-primary">Comment</button>
+            </form>
         }
-    </style>
-}
 
-
-<h1>@Model.Title</h1>
-
-<p>Views: @Model.Views</p>
-
-<img src="@Model.ImageUrl" alt="Alternate Text" style="width: 300px" />
-
-<h2>Description</h2>
-<p>@Model.Description</p>
-
-<h2>Directions</h2>
-<p>@Model.Directions</p>
-
-<h2>Ingredients</h2>
-<p>@Model.Ingredients</p>
-
-<h2> Date created: @Model.DateCreated</h2>
-
-<hr />
-<h3>Comments</h3>
-<hr />
-
-@if (User.Identity.IsAuthenticated)
-{
-    <form asp-controller="Comments" asp-action="Add" method="post" onsubmit="return validateForm()">
-        <input type="text" name="recipeId" value="@Model.Id" hidden />
-        <div class="form-group">
-            <textarea type="text" id="comment" name="comment" class="form-control" cols="20" rows="5" required></textarea>
-        </div>
-        <button type="submit" class="btn btn-primary">Comment</button>
-    </form>
-}
-
-@foreach (var comment in Model.Comments.OrderByDescending(x => x.DateCreated))
-{
-    <div class="comment">
-        <p>@comment.Message</p>
-        <p>User: @comment.Username</p>
-        <p>Date created: @comment.DateCreated</p>
+        @foreach (var comment in Model.RecipeDetails.Comments.OrderByDescending(x => x.DateCreated))
+        {
+            <div class="comment">
+                <p>@comment.Message</p>
+                <p>User: @comment.Username</p>
+                <p>Date created: @comment.DateCreated</p>
+            </div>
+        }
     </div>
-}
+    <div class="col-md-3">
+        <partial name="SidebarPartial" for="@Model.SidebarData">
+    </div>
+</div>
 
 @section Scripts{
     <script src="~/js/validator.js"></script>
-} 
+}

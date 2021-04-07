@@ -1,0 +1,29 @@
+﻿@*///////ImportantNote///////*@
+@*do not forget to include sidebar.css in parent view when using this partial*@
+
+@model MyRecipes.ViewModels.RecipeSidebarDataModel
+
+
+<h2>Top recipes:</h2>
+@foreach (var recipe in Model.TopRecipes)
+{
+    <a asp-controller="Recipes" asp-action="Details" asp-route-id="@recipe.Id">
+        <div class="recipeSidebarCard">
+            <div>@recipe.Title</div>
+            <div>Date created: @recipe.DateCreated</div>
+            <div>Views: @recipe.Views</div>
+        </div>
+    </a>
+}
+
+<h2>Most recent recipes:</h2>
+@foreach (var recipe in Model.MostRecentRecipes)
+{
+    <a asp-controller="Recipes" asp-action="Details" asp-route-id="@recipe.Id">
+        <div class="recipeSidebarCard">
+            <div>@recipe.Title</div>
+            <div>Date created: @recipe.DateCreated</div>
+            <div>Views: @recipe.Views</div>
+        </div>
+    </a>
+}

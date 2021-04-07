@@ -102,5 +102,15 @@ namespace MyRecipes.Services
 
             return response;
         }
+
+        public List<Recipe> GetMostRecentRecipes(int count)
+        {
+            return  _recipeRepository.GetMostRecentRecipes(count);
+        }
+
+        public List<Recipe> GetTopRecipes(int count)
+        {
+            return _recipeRepository.GetTopRecipes(count);
+        }
     }
 }

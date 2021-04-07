@@ -26,5 +26,15 @@ namespace MyRecipes.Repositories
                 .FirstOrDefault(x => x.Id == entityId);
             return recipe;
         }
+
+        public List<Recipe> GetMostRecentRecipes(int count)
+        {
+            return _context.Recipes.OrderByDescending(x => x.DateCreated).Take(count).ToList();
+        }
+
+        public List<Recipe> GetTopRecipes(int count)
+        {
+            return _context.Recipes.OrderByDescending(x => x.Views).Take(count).ToList();
+        }
     }
 }
