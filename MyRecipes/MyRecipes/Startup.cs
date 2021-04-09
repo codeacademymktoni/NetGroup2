@@ -9,6 +9,7 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
+using MyRecipes.Common.Options;
 using MyRecipes.Repositories;
 using MyRecipes.Repositories.Interfaces;
 using MyRecipes.Services;
@@ -28,17 +29,16 @@ namespace MyRecipes
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
-            //configure in startup
-            //see configuration below 
             services.AddDbContext<MyRecipesDbContext>(
-                    //config for lazy loading
-                    //x => x.UseLazyLoadingProxies().UseSqlServer("Server=(localdb)\\MSSQLLocalDB;Database=MyRecipes;Trusted_Connection=True;")
-                    x => x.UseSqlServer("Server=(localdb)\\MSSQLLocalDB;Database=MyRecipes;Trusted_Connection=True;")
+                    x => x.UseSqlServer(Configuration.GetConnectionString("MyRecipes"))
                 );
+
+            //var cookieExprrTime = Configuration.GetValue<int>("CookieExpirationPeriod");
+            //var topRecipesCount = Configuration["SidebarConfig:TopRecipesCount"];
 
             services.AddAuthentication(CookieAuthenticationDefaults.AuthenticationScheme).AddCookie(
                     options => {
-                        options.ExpireTimeSpan = TimeSpan.FromDays(30);
+                        options.ExpireTimeSpan = TimeSpan.FromDays(int.Parse(Configuration["CookieExpirationPeriod"]));
                         options.LoginPath = "/Auth/SignIn";
                         options.AccessDeniedPath = "/Auth/AccessDenied";
                     }
@@ -51,6 +51,9 @@ namespace MyRecipes
                     policy.RequireClaim("IsAdmin", "True");
                 });
             });
+
+            //configure options
+            services.Configure<SidebarConfig>(Configuration.GetSection("SidebarConfig"));
 
             //register services
             services.AddControllersWithViews().AddRazorRuntimeCompilation();
@@ -81,9 +84,7 @@ namespace MyRecipes
             }
             app.UseHttpsRedirection();
             app.UseStaticFiles();
-
             app.UseRouting();
-
             app.UseAuthentication();
             app.UseAuthorization();
             app.UseEndpoints(endpoints =>
