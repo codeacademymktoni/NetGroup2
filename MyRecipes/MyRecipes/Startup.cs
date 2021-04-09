@@ -10,6 +10,7 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using MyRecipes.Common.Options;
+using MyRecipes.Custom;
 using MyRecipes.Repositories;
 using MyRecipes.Repositories.Interfaces;
 using MyRecipes.Services;
@@ -78,15 +79,20 @@ namespace MyRecipes
             }
             else
             {
-                app.UseExceptionHandler("/Home/Error");
+                app.UseExceptionHandler("/Info/InternalError");
                 // The default HSTS value is 30 days. You may want to change this for production scenarios, see https://aka.ms/aspnetcore-hsts.
                 app.UseHsts();
             }
+
             app.UseHttpsRedirection();
             app.UseStaticFiles();
             app.UseRouting();
             app.UseAuthentication();
             app.UseAuthorization();
+
+            app.UseMiddleware<ExceptionLoggingMiddleware>();
+            app.UseMiddleware<RequestResponseLogMiddleware>();
+            
             app.UseEndpoints(endpoints =>
             {
                 endpoints.MapControllerRoute(

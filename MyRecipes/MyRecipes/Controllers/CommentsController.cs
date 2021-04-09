@@ -37,12 +37,12 @@ namespace MyRecipes.Controllers
         {
             var comment = _commentsService.GetById(id);
 
-            if(comment == null)
+            if (comment == null)
             {
                 return RedirectToAction("ErrorNotFound", "Info");
             }
 
-            if(comment.UserId != int.Parse(User.FindFirst("Id").Value))
+            if (comment.UserId != int.Parse(User.FindFirst("Id").Value))
             {
                 return RedirectToAction("AccessDenied", "Auth");
             }
