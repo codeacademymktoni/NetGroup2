@@ -1,0 +1,5 @@
+{"Type":0,"Message":"{\"RequestPath\":\"/\"}","DateCreated":"2021-04-12T19:49:09.0693594+02:00"}
+{"Type":0,"Message":"{\"ResponseStatusCode\":\"200\"}","DateCreated":"2021-04-12T19:49:15.3736037+02:00"}
+{"Type":0,"Message":"{\"RequestPath\":\"/adsasdasd\"}","DateCreated":"2021-04-12T19:49:15.6010457+02:00"}
+{"Type":0,"Message":"{\"ResponseStatusCode\":\"404\"}","DateCreated":"2021-04-12T19:49:15.6365117+02:00"}
+{"Type":0,"Message":"{\"RequestPath\":\"/\"}","DateCreated":"2021-04-12T19:50:26.6661499+02:00"}

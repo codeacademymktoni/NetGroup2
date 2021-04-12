@@ -10,6 +10,7 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using MyRecipes.Common.Options;
+using MyRecipes.Common.Services;
 using MyRecipes.Custom;
 using MyRecipes.Repositories;
 using MyRecipes.Repositories.Interfaces;
@@ -63,6 +64,7 @@ namespace MyRecipes
             services.AddTransient<IUsersService, UsersService>();
             services.AddTransient<ICommentsService, CommentsService>();
             services.AddTransient<ISidebarService, SidebarService>();
+            services.AddTransient<ILogService, LogService>();
 
             //register repositories
             services.AddTransient<IRecipesRepository, RecipesRepository>();
@@ -85,12 +87,17 @@ namespace MyRecipes
             }
 
             app.UseHttpsRedirection();
+
             app.UseStaticFiles();
+
             app.UseRouting();
+
             app.UseAuthentication();
+
             app.UseAuthorization();
 
             app.UseMiddleware<ExceptionLoggingMiddleware>();
+
             app.UseMiddleware<RequestResponseLogMiddleware>();
             
             app.UseEndpoints(endpoints =>

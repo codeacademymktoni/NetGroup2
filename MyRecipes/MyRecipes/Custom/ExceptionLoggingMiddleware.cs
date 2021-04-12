@@ -1,5 +1,8 @@
 ﻿using Microsoft.AspNetCore.Http;
 using System.Threading.Tasks;
+using System;
+using MyRecipes.Common.Services;
+using MyRecipes.Common.Models;
 
 namespace MyRecipes.Custom
 {
@@ -12,15 +15,16 @@ namespace MyRecipes.Custom
             _next = next;
         }
 
-        public async Task Invoke(HttpContext httpContext)
+        public async Task Invoke(HttpContext httpContext, ILogService logService)
         {
-            //customer logic for http context
             try
             {
                 await _next(httpContext);
             }
-            catch (System.Exception ex)
+            catch (Exception ex)
             {
+                var logData = new LogData() { Type = LogType.Error, DateCreated = DateTime.Now, Message = ex.ToString() };
+                logService.Log(logData);
 
                 throw;
             }

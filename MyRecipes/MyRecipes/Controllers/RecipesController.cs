@@ -1,5 +1,7 @@
 ﻿using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using MyRecipes.Common.Models;
+using MyRecipes.Common.Services;
 using MyRecipes.Mappings;
 using MyRecipes.Models;
 using MyRecipes.Services;
@@ -14,18 +16,21 @@ namespace MyRecipes.Controllers
     [Authorize(Policy = "IsAdmin")]
     public class RecipesController : Controller
     {
+        private readonly ILogService _logService;
         private IRecipesService _service { get; set; }
         private ISidebarService _sidebarService { get; set; }
 
-        public RecipesController(IRecipesService service, ISidebarService sidebarService)
+        public RecipesController(IRecipesService service, ISidebarService sidebarService, ILogService logService)
         {
             _service = service;
             _sidebarService = sidebarService;
+            _logService = logService;
         }
 
         [AllowAnonymous]
         public IActionResult Overview(string title)
         {
+            throw new Exception("this is test exception");
             var user = User;
             var recipes = _service.GetRecipesByTitle(title);
 
@@ -88,6 +93,11 @@ namespace MyRecipes.Controllers
             {
                 var domainModel = recipe.ToModel();
                 _service.CreateRecipe(domainModel);
+
+                var userId = User.FindFirst("Id");
+                var logData = new LogData() { Type = LogType.Info, DateCreated = DateTime.Now, Message = $"User with id {userId} created recipe {recipe.Title}" };
+                _logService.Log(logData);
+
                 return RedirectToAction("ManageOverview", new { SuccessMessage = "Recipe created sucessfully"});
             }
 
