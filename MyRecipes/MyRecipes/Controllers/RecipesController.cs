@@ -30,8 +30,6 @@ namespace MyRecipes.Controllers
         [AllowAnonymous]
         public IActionResult Overview(string title)
         {
-            throw new Exception("this is test exception");
-            var user = User;
             var recipes = _service.GetRecipesByTitle(title);
 
             var overviewDataModel = new RecipeOverviewDataModel();
