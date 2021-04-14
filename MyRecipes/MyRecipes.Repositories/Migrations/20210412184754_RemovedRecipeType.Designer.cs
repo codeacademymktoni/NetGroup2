@@ -3,15 +3,17 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using MyRecipes.Repositories;
 
 namespace MyRecipes.Repositories.Migrations
 {
     [DbContext(typeof(MyRecipesDbContext))]
-    partial class MyRecipesDbContextModelSnapshot : ModelSnapshot
+    [Migration("20210412184754_RemovedRecipeType")]
+    partial class RemovedRecipeType
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -76,9 +78,6 @@ namespace MyRecipes.Repositories.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<int>("RecipeTypeId")
-                        .HasColumnType("int");
-
                     b.Property<string>("Title")
                         .IsRequired()
                         .HasColumnType("nvarchar(50)")
@@ -89,24 +88,7 @@ namespace MyRecipes.Repositories.Migrations
 
                     b.HasKey("Id");
 
-                    b.HasIndex("RecipeTypeId");
-
                     b.ToTable("Recipes");
-                });
-
-            modelBuilder.Entity("MyRecipes.Models.RecipeType", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int")
-                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
-
-                    b.Property<string>("Name")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.HasKey("Id");
-
-                    b.ToTable("RecipeTypes");
                 });
 
             modelBuilder.Entity("MyRecipes.Models.User", b =>
@@ -152,15 +134,6 @@ namespace MyRecipes.Repositories.Migrations
                     b.HasOne("MyRecipes.Models.User", "User")
                         .WithMany("Comments")
                         .HasForeignKey("UserId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-                });
-
-            modelBuilder.Entity("MyRecipes.Models.Recipe", b =>
-                {
-                    b.HasOne("MyRecipes.Models.RecipeType", "RecipeType")
-                        .WithMany("Recipes")
-                        .HasForeignKey("RecipeTypeId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
                 });

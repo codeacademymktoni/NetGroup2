@@ -23,7 +23,7 @@
                     <div class="card">
                         <img src="@recipe.ImageUrl" class="card-img-top" alt="...">
                         <div class="card-body">
-                            <h5 class="card-title">@recipe.Title</h5>
+                            <h5 class="card-title">@recipe.Title - @recipe.RecipeType</h5>
                             <p class="card-text">Views: @recipe.Views</p>
                             <div class="card-text recipeDescription">@recipe.Description</div>
                             <a asp-controller="Recipes" asp-action="Details" asp-route-id="@recipe.Id" class="btn btn-primary">See more...</a>

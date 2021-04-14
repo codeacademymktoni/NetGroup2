@@ -7,5 +7,6 @@
         public string ImageUrl { get; set; }
         public string Description { get; set; }
         public int Views { get; set; }
+        public string RecipeType { get; set; }
     }
 }

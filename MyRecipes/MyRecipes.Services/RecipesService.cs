@@ -10,10 +10,13 @@ namespace MyRecipes.Services
 {
     public class RecipesService : IRecipesService
     {
+        private readonly IRecipeTypesService _recipeTypesService;
+
         private IRecipesRepository _recipeRepository { get; set; }
-        public RecipesService(IRecipesRepository recipesRepository)
+        public RecipesService(IRecipesRepository recipesRepository, IRecipeTypesService recipeTypesService)
         {
             _recipeRepository = recipesRepository;
+            _recipeTypesService = recipeTypesService;
         }
 
         public List<Recipe> GetAllRecipes()
@@ -42,22 +45,27 @@ namespace MyRecipes.Services
             return recipe;
         }
 
-        public void CreateRecipe(Recipe recipe)
+        public StatusModel CreateRecipe(Recipe recipe)
         {
+            var response = new StatusModel();
+
+            if (!_recipeTypesService.CheckIfExists(recipe.RecipeTypeId))
+            {
+                response.IsSuccessful = false;
+                response.Message = $"Recipe type with id {recipe.RecipeTypeId} does not exist";
+
+                return response;
+            }
+
             recipe.DateCreated = DateTime.Now;
             _recipeRepository.Add(recipe);
+
+            return response;
         }
 
-        public List<Recipe> GetRecipesByTitle(string title)
+        public List<Recipe> GetRecipesWithFilters(string title)
         {
-            if (title == null) 
-            {
-                return _recipeRepository.GetAll();
-            }
-            else
-            {
-                return _recipeRepository.GetByTitle(title);
-            }
+           return _recipeRepository.GetRecipesWithFilters(title);
         }
 
         public StatusModel Delete(int id)
@@ -91,6 +99,7 @@ namespace MyRecipes.Services
                 updatedRecipe.Directions = recipe.Directions;
                 updatedRecipe.Ingredients = recipe.Ingredients;
                 updatedRecipe.DateModified = DateTime.Now;
+                updatedRecipe.RecipeTypeId = recipe.RecipeTypeId;
 
                 _recipeRepository.Update(updatedRecipe);
             }

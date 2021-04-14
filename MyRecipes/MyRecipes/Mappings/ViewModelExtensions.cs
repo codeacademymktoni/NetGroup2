@@ -13,7 +13,8 @@ namespace MyRecipes.Mappings
                 ImageUrl = viewModel.ImageUrl,
                 Description = viewModel.Description,
                 Directions = viewModel.Directions,
-                Ingredients = viewModel.Ingredients
+                Ingredients = viewModel.Ingredients,
+                RecipeTypeId = viewModel.RecipeTypeId
             };
         }
 
@@ -26,7 +27,8 @@ namespace MyRecipes.Mappings
                 ImageUrl = viewModel.ImageUrl,
                 Description = viewModel.Description,
                 Directions = viewModel.Directions,
-                Ingredients = viewModel.Ingredients
+                Ingredients = viewModel.Ingredients,
+                RecipeTypeId = viewModel.RecipeTypeId
             };
         }
 

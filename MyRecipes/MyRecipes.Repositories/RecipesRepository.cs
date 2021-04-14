@@ -12,9 +12,17 @@ namespace MyRecipes.Repositories
         {
         }
 
-        public List<Recipe> GetByTitle(string title)
+        public List<Recipe> GetRecipesWithFilters(string title)
         {
-            var recipes = _context.Recipes.Where(x => x.Title.Contains(title)).ToList();
+            var query = _context.Recipes.Include(x => x.RecipeType);
+
+            if (title != null)
+            {
+                query.Where(x => x.Title.Contains(title));
+            }
+
+            var recipes = query.ToList();
+
             return recipes;
         }
 

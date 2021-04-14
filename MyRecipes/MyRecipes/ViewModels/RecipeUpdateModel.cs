@@ -1,4 +1,5 @@
-﻿using System.ComponentModel.DataAnnotations;
+﻿using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
 
 namespace MyRecipes.ViewModels
 {
@@ -20,5 +21,10 @@ namespace MyRecipes.ViewModels
 
         [Required]
         public string Description { get; set; }
+
+        [Required]
+        public int RecipeTypeId{ get; set; }
+
+        public List<RecipeTypeModel> RecipeTypes { get; set; }
     }
 }

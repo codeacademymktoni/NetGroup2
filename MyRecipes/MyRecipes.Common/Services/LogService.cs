@@ -13,7 +13,7 @@ namespace MyRecipes.Common.Services
 
         public LogService(IConfiguration configuration)
         {
-            _filePath = configuration["LogFilePath"];
+            _filePath = configuration["LogFilePath"] ?? "Logs.txt";
         }
 
         public void Log(LogData logData)

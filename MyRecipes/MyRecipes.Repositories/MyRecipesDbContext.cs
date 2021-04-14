@@ -11,5 +11,6 @@ namespace MyRecipes.Repositories
         public DbSet<Recipe> Recipes{ get; set; }
         public DbSet<User> Users { get; set; }
         public DbSet<Comment> Comments { get; set; }
+        public DbSet<RecipeType> RecipeTypes { get; set; }
     }
 }

@@ -33,5 +33,8 @@ namespace MyRecipes.Models
         public int Views { get; set; }
 
         public List<Comment> Comments{ get; set; }
+
+        public int RecipeTypeId { get; set; }
+        public RecipeType RecipeType { get; set; }
     }
 }

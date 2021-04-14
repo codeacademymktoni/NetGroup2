@@ -16,13 +16,19 @@ namespace MyRecipes.Controllers
     [Authorize(Policy = "IsAdmin")]
     public class RecipesController : Controller
     {
+        private readonly IRecipeTypesService _recipeTypesService;
         private readonly ILogService _logService;
-        private IRecipesService _service { get; set; }
+        private IRecipesService _recipesService { get; set; }
         private ISidebarService _sidebarService { get; set; }
 
-        public RecipesController(IRecipesService service, ISidebarService sidebarService, ILogService logService)
+        public RecipesController(
+            IRecipesService recipesService,
+            IRecipeTypesService recipeTypesService,
+            ISidebarService sidebarService, 
+            ILogService logService)
         {
-            _service = service;
+            _recipesService = recipesService;
+            _recipeTypesService = recipeTypesService;
             _sidebarService = sidebarService;
             _logService = logService;
         }
@@ -30,7 +36,7 @@ namespace MyRecipes.Controllers
         [AllowAnonymous]
         public IActionResult Overview(string title)
         {
-            var recipes = _service.GetRecipesByTitle(title);
+            var recipes = _recipesService.GetRecipesWithFilters(title);
 
             var overviewDataModel = new RecipeOverviewDataModel();
 
@@ -46,7 +52,7 @@ namespace MyRecipes.Controllers
         {
             try
             {
-                var recipe = _service.GetRecipeDetails(id);
+                var recipe = _recipesService.GetRecipeDetails(id);
 
                 if (recipe == null)
                 {
@@ -71,7 +77,7 @@ namespace MyRecipes.Controllers
         {
             ViewBag.ErrorMessage = errorMessage;
             ViewBag.SuccessMessage = successMessage;
-            var recipes = _service.GetAllRecipes();
+            var recipes = _recipesService.GetAllRecipes();
 
             var viewModels = recipes.Select(x => x.ToManageOverviewModel()).ToList();
 
@@ -81,7 +87,13 @@ namespace MyRecipes.Controllers
         [HttpGet]
         public IActionResult Create()
         {
-            return View();
+            var recipeTypes = _recipeTypesService.GetAll();
+            var viewModels = recipeTypes.Select(x => x.ToRecipeTypeModel()).ToList();
+
+            var viewModel = new RecipeCreateModel();
+            viewModel.RecipeTypes = viewModels;
+
+            return View(viewModel);
         }
 
         [HttpPost]
@@ -90,14 +102,26 @@ namespace MyRecipes.Controllers
             if (ModelState.IsValid)
             {
                 var domainModel = recipe.ToModel();
-                _service.CreateRecipe(domainModel);
+                var response = _recipesService.CreateRecipe(domainModel);
 
-                var userId = User.FindFirst("Id");
-                var logData = new LogData() { Type = LogType.Info, DateCreated = DateTime.Now, Message = $"User with id {userId} created recipe {recipe.Title}" };
-                _logService.Log(logData);
+                if (response.IsSuccessful)
+                {
+                    var userId = User.FindFirst("Id");
+                    var logData = new LogData() { Type = LogType.Info, DateCreated = DateTime.Now, Message = $"User with id {userId} created recipe {recipe.Title}" };
+                    _logService.Log(logData);
 
-                return RedirectToAction("ManageOverview", new { SuccessMessage = "Recipe created sucessfully"});
+                    return RedirectToAction("ManageOverview", new { SuccessMessage = "Recipe created sucessfully" });
+                }
+                else
+                {
+                    return RedirectToAction("ManageOverview", new { ErrorMessage = response.Message });
+                }
             }
+
+            var recipeTypes = _recipeTypesService.GetAll();
+            var viewModels = recipeTypes.Select(x => x.ToRecipeTypeModel()).ToList();
+
+            recipe.RecipeTypes = viewModels;
 
             return View(recipe);
         }
@@ -106,7 +130,7 @@ namespace MyRecipes.Controllers
         {
             try
             {
-                var response = _service.Delete(id);
+                var response = _recipesService.Delete(id);
 
                 if (response.IsSuccessful)
                 {
@@ -126,14 +150,21 @@ namespace MyRecipes.Controllers
         [HttpGet]
         public IActionResult Update(int id)
         {
-            var recipe = _service.GetRecipeById(id);
+            var recipe = _recipesService.GetRecipeById(id);
 
             if (recipe == null)
             {
                 return RedirectToAction("ManageOverview", new { ErrorMessage = "Recipe not found" });
             }
 
-            return View(recipe.ToUpdateModel());
+            var viewModel = recipe.ToUpdateModel();
+
+            var recipeTypes = _recipeTypesService.GetAll();
+            var viewModels = recipeTypes.Select(x => x.ToRecipeTypeModel()).ToList();
+
+            viewModel.RecipeTypes = viewModels;
+
+            return View(viewModel);
         }
 
         [HttpPost] 
@@ -143,7 +174,7 @@ namespace MyRecipes.Controllers
             {
                 try
                 {
-                    var response = _service.Update(recipe.ToModel());
+                    var response = _recipesService.Update(recipe.ToModel());
 
                     if (response.IsSuccessful)
                     {

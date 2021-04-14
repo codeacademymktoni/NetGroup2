@@ -14,7 +14,8 @@ namespace MyRecipes.Mappings
                 Title = recipe.Title,
                 Description = recipe.Description,
                 ImageUrl = recipe.ImageUrl,
-                Views = recipe.Views
+                Views = recipe.Views,
+                RecipeType = recipe.RecipeType.Name
             };
         }
 
@@ -24,6 +25,15 @@ namespace MyRecipes.Mappings
             {
                 Id = recipe.Id,
                 Title = recipe.Title,
+            };
+        }
+
+        public static RecipeTypeModel ToRecipeTypeModel(this RecipeType recipeType)
+        {
+            return new RecipeTypeModel()
+            {
+                Id = recipeType.Id,
+                Name = recipeType.Name,
             };
         }
 
@@ -63,7 +73,8 @@ namespace MyRecipes.Mappings
                 Description = recipe.Description,
                 ImageUrl = recipe.ImageUrl,
                 Directions = recipe.Directions,
-                Ingredients = recipe.Ingredients
+                Ingredients = recipe.Ingredients,
+                RecipeTypeId = recipe.RecipeTypeId
             };
         }
 

@@ -9,11 +9,11 @@ namespace MyRecipes.Services.Interfaces
     {
         List<Recipe> GetAllRecipes();
 
-        List<Recipe> GetRecipesByTitle(string title);
+        List<Recipe> GetRecipesWithFilters(string title);
 
         Recipe GetRecipeById(int id);
 
-        void CreateRecipe(Recipe recipe);
+        StatusModel CreateRecipe(Recipe recipe);
 
         StatusModel Delete(int id);
 

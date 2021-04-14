@@ -3,15 +3,17 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using MyRecipes.Repositories;
 
 namespace MyRecipes.Repositories.Migrations
 {
     [DbContext(typeof(MyRecipesDbContext))]
-    partial class MyRecipesDbContextModelSnapshot : ModelSnapshot
+    [Migration("20210412185905_AddedRecipeTypeTable")]
+    partial class AddedRecipeTypeTable
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -76,7 +78,7 @@ namespace MyRecipes.Repositories.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<int>("RecipeTypeId")
+                    b.Property<int?>("RecipeTypeId")
                         .HasColumnType("int");
 
                     b.Property<string>("Title")
@@ -160,9 +162,7 @@ namespace MyRecipes.Repositories.Migrations
                 {
                     b.HasOne("MyRecipes.Models.RecipeType", "RecipeType")
                         .WithMany("Recipes")
-                        .HasForeignKey("RecipeTypeId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
+                        .HasForeignKey("RecipeTypeId");
                 });
 #pragma warning restore 612, 618
         }
