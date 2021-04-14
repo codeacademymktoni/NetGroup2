@@ -66,12 +66,14 @@ namespace MyRecipes
             services.AddTransient<ISidebarService, SidebarService>();
             services.AddTransient<ILogService, LogService>();
             services.AddTransient<IRecipeTypesService, RecipeTypesService>();
+            services.AddTransient<IRecipeLikesService, RecipeLikesService>();
 
             //register repositories
             services.AddTransient<IRecipesRepository, RecipesRepository>();
             services.AddTransient<IUsersRepository, UsersRepository>();
             services.AddTransient<ICommentsRepository, CommentsRepository>();
             services.AddTransient<IRecipeTypesRepository, RecipeTypesRepository>();
+            services.AddTransient<IRecipeLikesRepository, RecipeLikesRepository>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

@@ -15,7 +15,18 @@ namespace MyRecipes.Mappings
                 Description = recipe.Description,
                 ImageUrl = recipe.ImageUrl,
                 Views = recipe.Views,
-                RecipeType = recipe.RecipeType.Name
+                RecipeType = recipe.RecipeType.Name,
+                RecipeLikes = recipe.RecipeLikes.Select(x => x.ToRecipeLikeModel()).ToList()
+            };
+        }
+
+        public static RecipeLikeModel ToRecipeLikeModel(this RecipeLike recipeLike)
+        {
+            return new RecipeLikeModel()
+            {
+                Id = recipeLike.Id,
+                RecipeId = recipeLike.RecipeId,
+                UserId = recipeLike.UserId
             };
         }
 
@@ -84,7 +95,7 @@ namespace MyRecipes.Mappings
             {
                 Address = user.Address,
                 Email = user.Email,
-                Username  = user.Username
+                Username = user.Username
             };
         }
 

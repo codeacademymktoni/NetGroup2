@@ -14,7 +14,7 @@ namespace MyRecipes.Repositories
 
         public List<Recipe> GetRecipesWithFilters(string title)
         {
-            var query = _context.Recipes.Include(x => x.RecipeType);
+            var query = _context.Recipes.Include(x => x.RecipeType).Include(x => x.RecipeLikes);
 
             if (title != null)
             {

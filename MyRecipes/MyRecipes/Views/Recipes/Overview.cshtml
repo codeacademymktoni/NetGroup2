@@ -25,6 +25,22 @@
                         <div class="card-body">
                             <h5 class="card-title">@recipe.Title - @recipe.RecipeType</h5>
                             <p class="card-text">Views: @recipe.Views</p>
+                            <p class="card-text">Likes: @recipe.RecipeLikes.Count()</p>
+                            @if (User.Identity.IsAuthenticated)
+                            {
+                                if (recipe.RecipeLikes.Any(x => x.UserId == int.Parse(User.FindFirst("Id").Value)))
+                                {
+                                    <a asp-controller="RecipeLikes" asp-action="Remove" asp-route-recipeId="@recipe.Id">
+                                        <i class="fas fa-thumbs-up"></i>
+                                    </a>
+                                }
+                                else
+                                {
+                                    <a asp-controller="RecipeLikes" asp-action="Add" asp-route-recipeId="@recipe.Id">
+                                        <i class="far fa-thumbs-up"></i>
+                                    </a>
+                                }
+                            }
                             <div class="card-text recipeDescription">@recipe.Description</div>
                             <a asp-controller="Recipes" asp-action="Details" asp-route-id="@recipe.Id" class="btn btn-primary">See more...</a>
                         </div>

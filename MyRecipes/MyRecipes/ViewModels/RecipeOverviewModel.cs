@@ -1,4 +1,6 @@
-﻿namespace MyRecipes.ViewModels
+﻿using System.Collections.Generic;
+
+namespace MyRecipes.ViewModels
 {
     public class RecipeOverviewModel
     {
@@ -8,5 +10,6 @@
         public string Description { get; set; }
         public int Views { get; set; }
         public string RecipeType { get; set; }
+        public List<RecipeLikeModel> RecipeLikes { get; set; }
     }
 }

@@ -25,5 +25,7 @@ namespace MyRecipes.Models
         public bool IsAdmin { get; set; }
 
         public List<Comment> Comments { get; set; }
+
+        public List<RecipeLike> RecipeLikes { get; set; }
     }
 }
