@@ -1,0 +1,14 @@
+{"Type":0,"Message":"{\"RequestPath\":\"/\"}","DateCreated":"2021-04-16T20:36:39.6832429+02:00"}
+{"Type":0,"Message":"{\"ResponseStatusCode\":\"200\"}","DateCreated":"2021-04-16T20:36:51.326832+02:00"}
+{"Type":0,"Message":"{\"RequestPath\":\"/asdasdsa\"}","DateCreated":"2021-04-16T20:36:51.5914371+02:00"}
+{"Type":0,"Message":"{\"ResponseStatusCode\":\"404\"}","DateCreated":"2021-04-16T20:36:51.5942527+02:00"}
+{"Type":0,"Message":"{\"RequestPath\":\"/\"}","DateCreated":"2021-04-16T20:37:00.5524697+02:00"}
+{"Type":0,"Message":"{\"ResponseStatusCode\":\"200\"}","DateCreated":"2021-04-16T20:37:00.7325615+02:00"}
+{"Type":0,"Message":"{\"RequestPath\":\"/asdasdsa\"}","DateCreated":"2021-04-16T20:37:00.8140954+02:00"}
+{"Type":0,"Message":"{\"ResponseStatusCode\":\"404\"}","DateCreated":"2021-04-16T20:37:00.8156309+02:00"}
+{"Type":0,"Message":"{\"RequestPath\":\"/Auth/SignIn\"}","DateCreated":"2021-04-16T20:37:09.392826+02:00"}
+{"Type":0,"Message":"{\"ResponseStatusCode\":\"200\"}","DateCreated":"2021-04-16T20:37:09.5876503+02:00"}
+{"Type":0,"Message":"{\"RequestPath\":\"/Auth/SignIn\"}","DateCreated":"2021-04-16T20:37:14.0686375+02:00"}
+{"Type":0,"Message":"{\"ResponseStatusCode\":\"200\"}","DateCreated":"2021-04-16T20:37:14.7433272+02:00"}
+{"Type":0,"Message":"{\"RequestPath\":\"/Auth/SignIn\"}","DateCreated":"2021-04-16T20:37:20.8794655+02:00"}
+{"Type":0,"Message":"{\"ResponseStatusCode\":\"200\"}","DateCreated":"2021-04-16T20:37:21.2531483+02:00"}
