@@ -1,0 +1,17 @@
+﻿.menuItemImage {
+    width: 100%;
+    transition: width 1s;
+}
+
+.menuItem {
+    background-color: white;
+    transition: background-color 2s;
+}
+
+.menuItem:hover {
+    background-color: grey;
+}
+
+.menuItem:hover .menuItemImage {
+    width: 110%;
+}
