@@ -7,11 +7,11 @@ using System.Linq;
 
 namespace PizzaPlace.Pages
 {
-    public class IndexModel : PageModel
+    public class HomeModel : PageModel
     {
         private readonly IOfferService _offerService;
 
-        public IndexModel(IOfferService offerService)
+        public HomeModel(IOfferService offerService)
         {
             _offerService = offerService;
         }

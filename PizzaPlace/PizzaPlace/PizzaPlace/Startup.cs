@@ -9,10 +9,6 @@ using PizzaPlace.Repositories;
 using PizzaPlace.Repositories.Interfaces;
 using PizzaPlace.Services;
 using PizzaPlace.Services.Interfaces;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
 
 namespace PizzaPlace
 {
@@ -33,18 +29,24 @@ namespace PizzaPlace
                 options.UseSqlServer(Configuration.GetConnectionString("PizzaPlaceDb"));
             });
 
-            services.AddRazorPages();
+            services.AddRazorPages().AddRazorPagesOptions(options => {
+                //options.RootDirectory = "/Views";
+                options.Conventions.AddPageRoute("/Home", "");
+            });
 
 
             //services
             services.AddTransient<IOfferService, OfferService>();
             services.AddTransient<IMenuItemService, MenuItemService>();
             services.AddTransient<IOrderService, OrderService>();
+            services.AddTransient<ISubscriptionService, SubscriptionService>();
             
 
             //repositories
             services.AddTransient<IOffersRepository, OffersRepository>();
             services.AddTransient<IMenuItemRepository, MenuItemRepository>();
+            services.AddTransient<IOrderRepository, OrderRepository>();
+            services.AddTransient<ISubscriptionRepository, SubscriptionRepository>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

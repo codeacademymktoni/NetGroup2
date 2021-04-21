@@ -1,5 +1,6 @@
 ﻿using System;
 using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
 
 namespace PizzaPlace.Models
 {
@@ -17,6 +18,7 @@ namespace PizzaPlace.Models
         public string Description { get; set; }
 
         [Required]
+        [Column(TypeName="decimal(5,2)")]
         public decimal Price { get; set; }
 
         [Required]
@@ -24,5 +26,8 @@ namespace PizzaPlace.Models
 
         [Required]
         public DateTime DateCreated { get; set; }
+
+        [Required]
+        public string Slug { get; set; }
     }
 }

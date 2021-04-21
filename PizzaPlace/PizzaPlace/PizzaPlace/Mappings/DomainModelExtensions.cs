@@ -24,7 +24,8 @@ namespace PizzaPlace.Mappings
                 Description = entity.Description,
                 ImageUrl = entity.ImageUrl,
                 Price = entity.Price,
-                Currency = entity.Currency
+                Currency = entity.Currency,
+                Slug = entity.Slug
             };
         }
     }

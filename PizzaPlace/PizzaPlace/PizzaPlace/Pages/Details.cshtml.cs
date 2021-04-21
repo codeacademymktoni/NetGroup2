@@ -19,9 +19,9 @@ namespace PizzaPlace.Pages
 
         public string ErrorMessage { get; set; }
 
-        public void OnGet(int id)
+        public void OnGet(string slug)
         {
-            MenuItem menuItem = _menuItemService.GetById(id);
+            MenuItem menuItem = _menuItemService.GetBySlug(slug);
 
             if (menuItem == null)
             {

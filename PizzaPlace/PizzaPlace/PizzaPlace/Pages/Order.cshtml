@@ -5,31 +5,44 @@
     ViewData["Title"] = "Order";
 }
 
-<form asp-page="Order" method="post">
-    <div class="form-group">
-        <label asp-for="@Model.Order.Name">Name:</label>
-        <input type="text" asp-for="@Model.Order.Name" class="form-control" placeholder="Enter name" />
-        <span asp-validation-for="@Model.Order.Name" class="text-danger"></span>
-    </div>
-    <div class="form-group">
-        <label asp-for="@Model.Order.Surname">Surname:</label>
-        <input type="text" asp-for="@Model.Order.Surname" class="form-control" placeholder="Enter surname" />
-        <span asp-validation-for="@Model.Order.Surname" class="text-danger"></span>
-    </div>
-    <div class="form-group">
-        <label asp-for="@Model.Order.Address">Address:</label>
-        <input type="text" asp-for="@Model.Order.Address" class="form-control" placeholder="Enter address" />
-        <span asp-validation-for="@Model.Order.Address" class="text-danger"></span>
-    </div>
-    <div class="form-group">
-        <label asp-for="@Model.Order.Phone">Phone:</label>
-        <input type="text" asp-for="@Model.Order.Phone" class="form-control" placeholder="Enter phone" />
-        <span asp-validation-for="@Model.Order.Phone" class="text-danger"></span>
-    </div>
-    <div class="form-group">
-        <label asp-for="@Model.Order.Message">Message:</label>
-        <textarea asp-for="@Model.Order.Message" class="form-control" placeholder="Enter message"></textarea>
-        <span asp-validation-for="@Model.Order.Message" class="text-danger"></span>
-    </div>
-    <button type="submit" class="btn btn-primary">Order</button>
-</form>
+<div class="container" style="background-color:#dadada; margin-top:20px; padding:20px;">
+    <form asp-page="Order" method="post">
+        <div class="form-group">
+            <label asp-for="@Model.Order.Name">Name:</label>
+            <input type="text" asp-for="@Model.Order.Name" class="form-control" placeholder="Enter name" />
+            <span asp-validation-for="@Model.Order.Name" class="text-danger"></span>
+        </div>
+        <div class="form-group">
+            <label asp-for="@Model.Order.Surname">Surname:</label>
+            <input type="text" asp-for="@Model.Order.Surname" class="form-control" placeholder="Enter surname" required />
+            <span asp-validation-for="@Model.Order.Surname" class="text-danger"></span>
+        </div>
+        <div class="form-group">
+            <label asp-for="@Model.Order.Address">Address:</label>
+            <input type="text" asp-for="@Model.Order.Address" class="form-control" placeholder="Enter address" required />
+            <span asp-validation-for="@Model.Order.Address" class="text-danger"></span>
+        </div>
+        <div class="form-group">
+            <label asp-for="@Model.Order.Phone">Phone:</label>
+            <input type="text" asp-for="@Model.Order.Phone" class="form-control" placeholder="Enter phone" required />
+            <span asp-validation-for="@Model.Order.Phone" class="text-danger"></span>
+        </div>
+        <div class="form-group">
+            <label asp-for="@Model.Order.Message">Message:</label>
+            <textarea asp-for="@Model.Order.Message" class="form-control" placeholder="Enter message" required></textarea>
+            <span asp-validation-for="@Model.Order.Message" class="text-danger"></span>
+        </div>
+        <button type="submit" class="btn btn-primary">Order</button>
+    </form>
+</div>
+<div class="container" style="background-color:#dadada; margin-top:20px; padding:20px;">
+    <form asp-page="Order" asp-page-handler="Subscribe" method="post">
+        <h1>Subscribe:</h1>
+        <div class="form-group">
+            <label for="subscriptionEmail">Email:</label>
+            <input class="form-control" type="email" name="email" id="subscriptionEmail" placeholder="Enter email" required />
+            <span class="form-text text-muted">We'll never share your email with anyone else.</span>
+        </div>
+        <button type="submit" class="btn btn-primary">Subscribe</button>
+    </form>
+</div>

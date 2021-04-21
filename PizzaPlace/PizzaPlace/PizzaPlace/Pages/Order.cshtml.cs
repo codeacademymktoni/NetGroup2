@@ -10,10 +10,12 @@ namespace PizzaPlace.Pages
     public class OrderModel : PageModel
     {
         private readonly IOrderService _orderService;
+        private readonly ISubscriptionService subscriptionService;
 
-        public OrderModel(IOrderService orderService)
+        public OrderModel(IOrderService orderService, ISubscriptionService subscriptionService)
         {
             _orderService = orderService;
+            this.subscriptionService = subscriptionService;
         }
 
         [BindProperty]
@@ -23,10 +25,24 @@ namespace PizzaPlace.Pages
         {
         }
 
-        public void OnPost()
+        public IActionResult OnPost()
         {
-            var newOrder = Order.ToDomainModel();
-            _orderService.Create(newOrder);
+            if (ModelState.IsValid)
+            {
+                var newOrder = Order.ToDomainModel();
+                _orderService.Create(newOrder);
+
+                return RedirectToPage("ConfirmationPage", "OrderCompleted");
+            }
+
+            return Page();
+        }
+
+        public IActionResult OnPostSubscribe(string email)
+        {
+            subscriptionService.Create(email);
+
+            return RedirectToPage("ConfirmationPage", "SubscriptionCompleted");
         }
     }
 }
