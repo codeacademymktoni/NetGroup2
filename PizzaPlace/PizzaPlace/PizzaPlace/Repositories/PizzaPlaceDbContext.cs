@@ -1,9 +1,11 @@
-﻿using Microsoft.EntityFrameworkCore;
+﻿using Microsoft.AspNetCore.Identity;
+using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore;
 using PizzaPlace.Models;
 
 namespace PizzaPlace.Repositories
 {
-    public class PizzaPlaceDbContext : DbContext
+    public class PizzaPlaceDbContext : IdentityDbContext
     {
         public PizzaPlaceDbContext(DbContextOptions<PizzaPlaceDbContext> options) : base(options)
         {}
@@ -18,6 +20,8 @@ namespace PizzaPlace.Repositories
             builder.Entity<MenuItem>()
                 .HasIndex(u => u.Slug)
                 .IsUnique();
+
+            base.OnModelCreating(builder);
         }
     }
 }

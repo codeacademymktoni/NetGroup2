@@ -1,6 +1,6 @@
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
-using Microsoft.AspNetCore.HttpsPolicy;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
@@ -29,11 +29,14 @@ namespace PizzaPlace
                 options.UseSqlServer(Configuration.GetConnectionString("PizzaPlaceDb"));
             });
 
+            services.AddDefaultIdentity<IdentityUser>()
+                .AddEntityFrameworkStores<PizzaPlaceDbContext>()
+                .AddDefaultTokenProviders();
+
             services.AddRazorPages().AddRazorPagesOptions(options => {
                 //options.RootDirectory = "/Views";
                 options.Conventions.AddPageRoute("/Home", "");
             });
-
 
             //services
             services.AddTransient<IOfferService, OfferService>();
@@ -67,6 +70,8 @@ namespace PizzaPlace
             app.UseStaticFiles();
 
             app.UseRouting();
+
+            app.UseAuthentication();
 
             app.UseAuthorization();
 

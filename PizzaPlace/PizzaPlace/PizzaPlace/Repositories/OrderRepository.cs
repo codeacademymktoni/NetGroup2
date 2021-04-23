@@ -1,5 +1,7 @@
 ﻿using PizzaPlace.Models;
 using PizzaPlace.Repositories.Interfaces;
+using System.Collections.Generic;
+using System.Linq;
 
 namespace PizzaPlace.Repositories
 {
@@ -15,6 +17,22 @@ namespace PizzaPlace.Repositories
         public void Add(Order newOrder)
         {
             _dbContext.Orders.Add(newOrder);
+            _dbContext.SaveChanges();
+        }
+
+        public List<Order> GetAll()
+        {
+            return _dbContext.Orders.ToList();
+        }
+
+        public Order GetById(int id)
+        {
+            return _dbContext.Orders.FirstOrDefault(x => x.Id == id);
+        }
+
+        public void Update(Order order)
+        {
+            _dbContext.Update(order);
             _dbContext.SaveChanges();
         }
     }

@@ -2,6 +2,7 @@
 using PizzaPlace.Repositories.Interfaces;
 using PizzaPlace.Services.Interfaces;
 using System;
+using System.Collections.Generic;
 
 namespace PizzaPlace.Services
 {
@@ -16,7 +17,24 @@ namespace PizzaPlace.Services
 
         public void Create(Order newOrder)
         {
+            newOrder.Status = OrderStatus.Pending;
             orderRepository.Add(newOrder);
+        }
+
+        public List<Order> GetAll()
+        {
+            return orderRepository.GetAll();
+        }
+
+        public void SetProcessed(int id)
+        {
+            Order order = orderRepository.GetById(id);
+
+            if(order != null)
+            {
+                order.Status = OrderStatus.Processed;
+                orderRepository.Update(order);
+            }
         }
     }
 }
