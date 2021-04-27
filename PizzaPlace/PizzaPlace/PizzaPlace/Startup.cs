@@ -9,6 +9,7 @@ using PizzaPlace.Repositories;
 using PizzaPlace.Repositories.Interfaces;
 using PizzaPlace.Services;
 using PizzaPlace.Services.Interfaces;
+using System;
 
 namespace PizzaPlace
 {
@@ -32,6 +33,28 @@ namespace PizzaPlace
             services.AddDefaultIdentity<IdentityUser>()
                 .AddEntityFrameworkStores<PizzaPlaceDbContext>()
                 .AddDefaultTokenProviders();
+
+            services.ConfigureApplicationCookie(options =>
+            {
+                options.ExpireTimeSpan = TimeSpan.FromDays(30);
+            });
+
+            //services.Configure<IdentityOptions>(options => {
+            //    options.SignIn.RequireConfirmedAccount = true;
+            //    options.User.RequireUniqueEmail = true;
+            //    options.Password.RequireDigit = true;
+            //    options.Password.RequireNonAlphanumeric = true;
+            //    options.Password.RequireUppercase = true;
+            //});
+
+            //services.AddAuthentication().AddGoogle(options =>
+            //{
+            //    IConfigurationSection googleAuthNSection =
+            //        Configuration.GetSection("Authentication:Google");
+
+            //    options.ClientId = googleAuthNSection["ClientId"];
+            //    options.ClientSecret = googleAuthNSection["ClientSecret"];
+            //});
 
             services.AddRazorPages().AddRazorPagesOptions(options => {
                 //options.RootDirectory = "/Views";
