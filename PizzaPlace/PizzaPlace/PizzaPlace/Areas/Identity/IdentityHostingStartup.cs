@@ -5,6 +5,7 @@ using Microsoft.AspNetCore.Identity.UI;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
+using PizzaPlace.Models;
 using PizzaPlace.Repositories;
 
 [assembly: HostingStartup(typeof(PizzaPlace.Areas.Identity.IdentityHostingStartup))]
@@ -15,7 +16,6 @@ namespace PizzaPlace.Areas.Identity
         public void Configure(IWebHostBuilder builder)
         {
             builder.ConfigureServices((context, services) => {
-
             });
         }
     }

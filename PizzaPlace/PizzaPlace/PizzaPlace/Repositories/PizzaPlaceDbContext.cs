@@ -1,11 +1,10 @@
-﻿using Microsoft.AspNetCore.Identity;
-using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
+﻿using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
 using PizzaPlace.Models;
 
 namespace PizzaPlace.Repositories
 {
-    public class PizzaPlaceDbContext : IdentityDbContext
+    public class PizzaPlaceDbContext : IdentityDbContext<ApplicationUser>
     {
         public PizzaPlaceDbContext(DbContextOptions<PizzaPlaceDbContext> options) : base(options)
         {}
