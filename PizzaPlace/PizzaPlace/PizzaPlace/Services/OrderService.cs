@@ -26,13 +26,18 @@ namespace PizzaPlace.Services
             return orderRepository.GetAll();
         }
 
-        public void SetProcessed(int id)
+        public List<Order> GetByStatus(OrderStatus status)
+        {
+            return orderRepository.GetByStatus(status);
+        }
+
+        public void SetStatus(int id, OrderStatus status)
         {
             Order order = orderRepository.GetById(id);
 
             if(order != null)
             {
-                order.Status = OrderStatus.Processed;
+                order.Status = status;
                 orderRepository.Update(order);
             }
         }

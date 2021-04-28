@@ -1,5 +1,6 @@
 ﻿using PizzaPlace.Models;
 using PizzaPlace.Repositories.Interfaces;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 
@@ -23,6 +24,11 @@ namespace PizzaPlace.Repositories
         public List<Order> GetAll()
         {
             return _dbContext.Orders.ToList();
+        }
+
+        public List<Order> GetByStatus(OrderStatus orderStatus)
+        {
+            return _dbContext.Orders.Where(x => x.Status == orderStatus).ToList();
         }
 
         public Order GetById(int id)

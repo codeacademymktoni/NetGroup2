@@ -1,0 +1,64 @@
+﻿@page
+@model PizzaPlace.Pages.Admin.OrdersListModel
+@{
+    ViewData["Title"] = "Orders list";
+}
+
+
+<h1>Orders List:</h1>
+
+<table class="table table-hover">
+    <thead>
+        <tr>
+            <th>
+                Name
+            </th>
+            <th>
+                Surname
+            </th>
+            <th>
+                Phone
+            </th>
+            <th>
+                Address
+            </th>
+            <th>
+                Message
+            </th>
+            <th>
+                Status
+            </th>
+            <th>
+            </th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var order in Model.OrdersList)
+        {
+        <tr>
+            <td>@order.Name</td>
+            <td>@order.Surname</td>
+            <td>@order.Phone</td>
+            <td>@order.Address</td>
+            <td>@order.Message</td>
+            <td>@order.Status</td>
+
+            @if (order.Status == Models.OrderStatus.Pending)
+            {
+                <td>
+                    <a class="btn btn-success" asp-page="/Dashboard/OrdersList" asp-page-handler="SetProcessed" asp-route-id="@order.Id">Set Processed</a>
+                </td>
+            }
+            else if (order.Status == Models.OrderStatus.Processed)
+            {
+                <td>
+                    <a class="btn btn-success" asp-page="/Dashboard/OrdersList" asp-page-handler="SetDone" asp-route-id="@order.Id">Set Done</a>
+                </td>
+            }else
+            {
+                <td class="text-success">Done</td>
+            }
+        </tr>
+        }
+    </tbody>
+</table>

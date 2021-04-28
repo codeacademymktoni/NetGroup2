@@ -1,0 +1,67 @@
+﻿@page
+@model PizzaPlace.Pages.Dashboard.UsersListModel
+@{
+    ViewData["Title"] = "Users list";
+}
+
+@using Microsoft.AspNetCore.Identity
+@using PizzaPlace.Models
+
+@inject UserManager<ApplicationUser> UserManager
+
+<table class="table table-bordered">
+    <thead>
+        <tr>
+            <th>
+                Email
+            </th>
+            <th>
+                Roles
+            </th>
+            <th>
+                Roles Actions
+            </th>
+            <th>
+                User Actions
+            </th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var user in Model.Users)
+        {
+            <tr>
+                <td>
+                    @user.Email
+                </td>
+                <td>
+                    @foreach (var role in await UserManager.GetRolesAsync(user))
+                    {
+                        <p>@role</p>
+                    }
+                </td>
+                <td>
+                    @foreach (var role in Model.Roles)
+                    {
+                        @if (await UserManager.IsInRoleAsync(user, role.Name))
+                        {
+                            <p>
+                                <a asp-page-handler="RemoveRole" asp-route-roleName="@role.Name" asp-route-userId="@user.Id" class="text-danger">Remove @role.Name role</a>
+                            </p>
+                        }
+                        else
+                        {
+                            <p>
+                                <a asp-page-handler="AddRole" asp-route-roleName="@role.Name" asp-route-userId="@user.Id" class="text-success">Add @role.Name role</a>
+                            </p>
+                        }
+                    }
+                </td>
+                <td>
+                    <p>
+                        <a asp-page-handler="DeleteUser" asp-route-userId="@user.Id" class="text-success">Delete user</a>
+                    </p>
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>
