@@ -28,6 +28,16 @@ namespace BookStore
                 options.UseSqlServer(Configuration.GetConnectionString("BookStoreDB"));
             });
 
+            services.AddCors(options =>
+            {
+                options.AddPolicy("AllowAll", builder =>
+                {
+                    builder.AllowAnyMethod()
+                           .AllowAnyOrigin()
+                           .AllowAnyHeader();
+                });
+            });
+
             services.AddControllers();
             services.AddTransient<IBooksService, BooksService>();
             services.AddTransient<IBooksRepository, BooksRepository>();
@@ -40,6 +50,8 @@ namespace BookStore
             {
                 app.UseDeveloperExceptionPage();
             }
+
+            app.UseCors("AllowAll");
 
             app.UseHttpsRedirection();
 
