@@ -49,6 +49,11 @@ namespace BookStore.Services
             return _booksRepository.GetById(id);
         }
 
+        public List<Book> GetWithFilters(string title, string author)
+        {
+            return _booksRepository.GetWithFilters(title, author);
+        }
+
         public void Update(Book book)
         {
             var dbBook = _booksRepository.GetById(book.Id);

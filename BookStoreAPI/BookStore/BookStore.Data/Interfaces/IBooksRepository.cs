@@ -12,5 +12,6 @@ namespace BookStore.Data.Interfaces
         Book GetById(int id);
         void Delete(Book book);
         Book GetByTitle(string title);
+        List<Book> GetWithFilters(string title, string author);
     }
 }
