@@ -30,10 +30,25 @@
                 <li class="nav-item">
                     <a class="nav-link" href="./contactus.html">Contact us</a>
                 </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="./cart.html">Cart</a>
+                </li>
             </ul>
         </div>
     </nav>
-
+    <div class="container">
+        <div class="form col-md-6 form-row">
+            <div class="form-group col-md-6">
+                <label for="authorSearchInput"></label>
+                <input class="form-control" placeholder="Author" id="authorSearchInput"/>
+            </div>
+            <div class="form-group col-md-6">
+                <label for="titleSearchInput"></label>
+                <input class="form-control" placeholder="Title" id="titleSearchInput"/>
+            </div>
+            <button class="btn btn-primary" id="filterSearchBtn" onclick="getWithFilter()">Search</button>
+        </div>
+    </div>
     <div class="container p-3">
         <div class="row" id="card-container">
             <!-- <div class="col-md-3">
@@ -71,9 +86,6 @@
             </div> -->
         </div>
     </div>
-
-    <button onclick="createBook()">Create</button>
-
     <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"
         integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj"
         crossorigin="anonymous"></script>
@@ -81,7 +93,7 @@
         integrity="sha384-Piv4xVNRyMGpqkS2by6br4gNJ7DXjqk09RmUpJ8jgGtD7zP9yug3goQfGII0yAns"
         crossorigin="anonymous"></script>
     <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
-
+    <script src="./scripts/localStorageService.js"></script>
     <script src="./scripts/app.js"></script>
 </body>
 

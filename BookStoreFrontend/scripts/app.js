@@ -1,71 +1,104 @@
-axios.get('https://localhost:44308/api/books')
-    .then(function (response) {
-        for (let i = 0; i < response.data.length; i++) {
-            createCard(response.data[i]);
-        }
-    })
-    .catch(function (error) {
-        console.log(error);
-    });
-
 function createCard(book) {
-    var col = document.createElement("div");
-    col.classList.add("col-md-3");
+  var col = document.createElement("div");
+  col.classList.add("col-md-3");
 
-    var card = document.createElement("div");
-    card.classList.add("card");
+  var card = document.createElement("div");
+  card.classList.add("card");
 
-    var cardBody = document.createElement("div");
-    cardBody.classList.add("card-body");
+  var cardBody = document.createElement("div");
+  cardBody.classList.add("card-body");
 
-    var cardTitle = document.createElement("h4");
-    cardTitle.classList.add("card-title");
-    cardTitle.innerText = book.title;
+  var cardTitle = document.createElement("h4");
+  cardTitle.classList.add("card-title");
+  cardTitle.innerText = book.title;
 
-    var cardAuthor = document.createElement("h4");
-    cardAuthor.classList.add("card-title");
-    cardAuthor.innerText = book.author;
+  var cardAuthor = document.createElement("h4");
+  cardAuthor.classList.add("card-title");
+  cardAuthor.innerText = book.author;
 
-    var cardDescription = document.createElement("p");
-    cardDescription.classList.add("card-text");
-    cardDescription.innerText = book.description;
+  var cardDescription = document.createElement("p");
+  cardDescription.classList.add("card-text");
+  cardDescription.innerText = book.description;
 
-    var cardPrice = document.createElement("p");
-    cardPrice.classList.add("card-text");
-    cardPrice.innerText = book.price;
+  var cardPrice = document.createElement("p");
+  cardPrice.classList.add("card-text");
+  cardPrice.innerText = book.price;
 
-    var cardGenre = document.createElement("p");
-    cardGenre.classList.add("card-text");
-    cardGenre.innerText = book.genre;
+  var cardGenre = document.createElement("p");
+  cardGenre.classList.add("card-text");
+  cardGenre.innerText = book.genre;
 
-    cardBody.appendChild(cardTitle);
-    cardBody.appendChild(cardAuthor);
-    cardBody.appendChild(cardDescription);
-    cardBody.appendChild(cardPrice);
-    cardBody.appendChild(cardGenre);
+  var cardBtn = document.createElement("button");
+  cardBtn.classList.add("btn");
+  cardBtn.classList.add("btn-primary");
 
-    card.appendChild(cardBody);
-    col.appendChild(card);
+  if(localStorageService.exists('cartItems', book.id)){
+    cardBtn.innerHTML = "Remove from cart";
+    cardBtn.onclick = function(e){
+      removeFromCart(e, book.id);
+    }
+  }else{
+    cardBtn.innerHTML = "Add to cart";
+    cardBtn.onclick = function(e){
+      addToCart(e, book.id);
+    }
+  }
 
-    var cardContainer = document.getElementById("card-container");
-    cardContainer.appendChild(col);
+  cardBody.appendChild(cardTitle);
+  cardBody.appendChild(cardAuthor);
+  cardBody.appendChild(cardDescription);
+  cardBody.appendChild(cardPrice);
+  cardBody.appendChild(cardGenre);
+  cardBody.appendChild(cardBtn);
+
+  card.appendChild(cardBody);
+  col.appendChild(card);
+
+  var cardContainer = document.getElementById("card-container");
+  cardContainer.appendChild(col);
 }
 
-  function createBook(){
-    var newBook =  {
-        title: "Test book = new",
-        description: "test book",
-        author: "Olivera Nikolovska",
-        genre: "Children",
-        quantity: 10,
-        price: 200.00
-      }
+function addToCart(event, bookId){
 
-    axios.post('https://localhost:44308/api/books', newBook)
-      .then(function (response) {
-        createCard(newBook);
-      })
-      .catch(function (error) {
-        console.log(error);
-      });
+  localStorageService.add("cartItems", bookId);
+
+  event.target.innerHTML = "Remove from cart";
+  event.target.onclick = function(e){
+    removeFromCart(e, bookId);
   }
+}
+
+function removeFromCart(event, bookId){
+  localStorageService.remove("cartItems", bookId);
+ 
+  event.target.innerHTML = "Add to cart";
+  event.target.onclick = function(e){
+    addToCart(e, bookId);
+  }
+}
+
+function initApp() {
+  renderCards();
+}
+
+function getWithFilter() {
+  var authorInput = document.getElementById("authorSearchInput").value;
+  var titleInput = document.getElementById("titleSearchInput").value;
+
+  renderCards(authorInput, titleInput);
+}
+
+function renderCards(authorInput = "", titleInput = ""){
+  axios.get(`https://localhost:44308/api/books?author=${authorInput}&title=${titleInput}`)
+  .then(function (response) {
+    document.getElementById("card-container").innerHTML = "";
+    for (let i = 0; i < response.data.length; i++) {
+      createCard(response.data[i]);
+    }
+  })
+  .catch(function (error) {
+    console.log(error);
+  });
+}
+
+initApp();
