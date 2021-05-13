@@ -50,19 +50,19 @@
         <hr/>
         <div class="form-group">
             <label for="customerName">Full Name</label>
-            <input class="form-control" id="customerName" placeholder="Please enter full name" />
+            <input class="form-control" id="customerName" name="FullName" required placeholder="Please enter full name" />
         </div>
         <div class="form-group">
             <label for="customerEmail">Email</label>
-            <input class="form-control" id="customerEmail" placeholder="Please enter email" />
+            <input class="form-control" id="customerEmail" name="Email" required placeholder="Please enter email" />
         </div>
         <div class="form-group">
             <label for="customerAddress">Address</label>
-            <input class="form-control" id="customerAddress" placeholder="Please enter address" />
+            <input class="form-control" id="customerAddress" name="Address" required placeholder="Please enter address" />
         </div>
         <div class="form-group">
             <label for="customerPhone">Phone</label>
-            <input class="form-control" id="customerPhone" placeholder="Please enter phone" />
+            <input class="form-control" id="customerPhone" name="Phone" required placeholder="Please enter phone" />
         </div>
         <button class="btn btn-primary" onclick="orderBooks()">Order</button>
     </div>
@@ -76,6 +76,7 @@
         crossorigin="anonymous"></script>
     <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
     <script src="./scripts/localStorageService.js"></script>
+    <script src="./scripts/validator.js"></script>
     <script src="./scripts/cart.js"></script>
 </body>
 

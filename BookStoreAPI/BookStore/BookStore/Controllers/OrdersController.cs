@@ -24,8 +24,15 @@ namespace BookStore.Controllers
         [HttpPost]
         public IActionResult Create(CreateOrderDto createOrderDto)
         {
-            _ordersService.Create(createOrderDto.ToDomainModel());
-            return Ok();
+            if (ModelState.IsValid)
+            {
+                _ordersService.Create(createOrderDto.ToDomainModel());
+                return Ok();
+            }
+            else
+            {
+                return BadRequest(ModelState);
+            }
         }
     }
 }

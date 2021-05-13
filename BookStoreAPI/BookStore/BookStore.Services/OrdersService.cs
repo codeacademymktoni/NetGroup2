@@ -17,7 +17,6 @@ namespace BookStore.Services
         }
         public void Create(Order order)
         {
-
            //bookservice.GetBooksByIds()
             order.DateCreated = DateTime.Now;
             ordersRepository.Create(order);

@@ -14,7 +14,7 @@ function initCart() {
 
 }
 
-function createCartItem(book){
+function createCartItem(book) {
     var card = document.createElement("div");
     card.classList.add("bookCard");
 
@@ -38,19 +38,19 @@ function createCartItem(book){
     container.appendChild(card);
 }
 
-function removeFromCart(event, bookId){
+function removeFromCart(event, bookId) {
     localStorageService.remove('cartItems', bookId);
     event.target.parentElement.remove();
 }
 
-function orderBooks(){
-    debugger;
+function orderBooks() {
     //get all data from inputs
     var name = document.getElementById("customerName").value;
     var email = document.getElementById("customerEmail").value;
     var address = document.getElementById("customerAddress").value;
     var phone = document.getElementById("customerPhone").value;
     //get booksids from local storage
+    validateForm();
 
     var bookIds = localStorageService.getAll('cartItems');
 
@@ -58,23 +58,56 @@ function orderBooks(){
         fullName: name,
         email: email,
         address: address,
-        phone : phone,
-        bookIds :  bookIds       
+        phone: phone,
+        bookIds: bookIds
     }
 
     axios.post("https://localhost:44308/api/orders", data)
-        .then(function(response){
+        .then(function (response) {
             alert(`Thanks for ordering`);
             localStorageService.clear("cartItems");
             location.href = "./index.html"
         })
-        .catch(function(error){
-            console.log(error)
+        .catch(function (error) {
+            if(error.response.status == 400){
+                for (const property in error.response.data.errors) {
+                    console.log(`${property}: ${error.response.data.errors[property]}`);
+                }
+            }else{
+                alert("Something has occured. Please try again later.");
+            }
         })
+
 
     //make http post to send data to api
     //redirect to index.html
 }
+
+// function validateData(data){
+//     var result = true;
+
+//     if(data.fullName == null || data.fullName.trim() == ""){
+//         result = false;
+//     }    
+
+//     if(data.email == null || data.email.trim() == ""){
+//         result = false;
+//     }  
+
+//     if(data.address == null || data.address.trim() == ""){
+//         result = false;
+//     }  
+
+//     if(data.phone == null || data.phone.trim() == ""){
+//         result = false;
+//     }  
+
+//     if(data.bookIds == null || data.bookIds.length == 0){
+//         result = false;
+//     }  
+
+//     return result;
+// }
 
 initCart();
 
