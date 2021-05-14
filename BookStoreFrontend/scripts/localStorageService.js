@@ -14,7 +14,7 @@ var localStorageService = {
       
         localStorage.setItem(storageKey, JSON.stringify(cartItems));
     },
-    remove: function(storageKey, item){
+    remove: (storageKey, item) => {
         var storageData = localStorage.getItem(storageKey);
 
         if(storageData != null){
