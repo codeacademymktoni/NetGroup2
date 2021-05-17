@@ -1,10 +1,12 @@
 ﻿using BookStoreAdminDashboard.Models;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.Extensions.Configuration;
 using Newtonsoft.Json;
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.Net.Http;
+using System.Net.Http.Headers;
 using System.Threading.Tasks;
 
 namespace BookStoreAdminDashboard.Controllers
@@ -12,10 +14,16 @@ namespace BookStoreAdminDashboard.Controllers
     [Authorize]
     public class HomeController : Controller
     {
+        public string BookStoreApiBaseUrl { get; set; }
+        public HomeController(IConfiguration configuration)
+        {
+            BookStoreApiBaseUrl = configuration.GetValue<string>("BookStoreApiBaseUrl");
+        }
+
         public async Task<IActionResult> Index(string successMessage)
         {
             var httpClient = new HttpClient();
-            var httpResponse = await httpClient.GetAsync("https://localhost:44308/api/books");
+            var httpResponse = await httpClient.GetAsync($"{BookStoreApiBaseUrl}/api/books");
 
             if (httpResponse.IsSuccessStatusCode) 
             {
@@ -32,7 +40,7 @@ namespace BookStoreAdminDashboard.Controllers
         public async Task<IActionResult> Details(int id)
         {
             var httpClient = new HttpClient();
-            var httpResponse = await httpClient.GetAsync($"https://localhost:44308/api/books/{id}");
+            var httpResponse = await httpClient.GetAsync($"{BookStoreApiBaseUrl}/api/books/{id}");
 
             if (httpResponse.IsSuccessStatusCode)
             {
@@ -48,7 +56,9 @@ namespace BookStoreAdminDashboard.Controllers
         public async Task<IActionResult> Delete(int id)
         {
             var httpClient = new HttpClient();
-            var httpResponse = await httpClient.DeleteAsync($"https://localhost:44308/api/books/{id}");
+            httpClient.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("ApiKey", "058eb32f-55a1-49bf-becb-90083501455a");
+
+            var httpResponse = await httpClient.DeleteAsync($"{BookStoreApiBaseUrl}/api/books/{id}");
 
             if (httpResponse.IsSuccessStatusCode)
             {
@@ -70,7 +80,8 @@ namespace BookStoreAdminDashboard.Controllers
             if (ModelState.IsValid)
             {
                 var httpClient = new HttpClient();
-                var httpResponse = await httpClient.PostAsJsonAsync($"https://localhost:44308/api/books", viewModel);
+                httpClient.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("ApiKey", "058eb32f-55a1-49bf-becb-90083501455a");
+                var httpResponse = await httpClient.PostAsJsonAsync($"{BookStoreApiBaseUrl}/api/books", viewModel);
 
                 if (httpResponse.IsSuccessStatusCode)
                 {
@@ -108,6 +119,7 @@ namespace BookStoreAdminDashboard.Controllers
             if (ModelState.IsValid)
             {
                 var httpClient = new HttpClient();
+                httpClient.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("ApiKey", "058eb32f-55a1-49bf-becb-90083501455a");
                 var httpResponse = await httpClient.PutAsJsonAsync($"https://localhost:44308/api/books", viewModel);
 
                 if (httpResponse.IsSuccessStatusCode)

@@ -13,7 +13,7 @@ using System.Linq;
 
 namespace MyRecipes.Controllers
 {
-    [Authorize(Policy = "IsAdmin")]
+    [Authorize(Roles = "Admin")]
     public class RecipesController : Controller
     {
         private readonly IRecipeTypesService _recipeTypesService;

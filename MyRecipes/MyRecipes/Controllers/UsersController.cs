@@ -33,7 +33,7 @@ namespace MyRecipes.Controllers
             return View(user.ToDetailsModel());
         }
 
-        [Authorize(Policy = "IsAdmin")]
+        [Authorize(Roles = "Admin")]
         public IActionResult ManageOverview(string successMessage, string errorMessage)
         {
             ViewBag.SuccessMessage = successMessage;
@@ -46,7 +46,7 @@ namespace MyRecipes.Controllers
             return View(viewModel);
         }
 
-        [Authorize(Policy = "IsAdmin")]
+        [Authorize(Roles = "Admin")]
         public IActionResult ToggleAdminRole(int id)
         {
             var response = usersService.ToggleAdminRole(id);
@@ -61,7 +61,7 @@ namespace MyRecipes.Controllers
             }
         }
 
-        [Authorize(Policy = "IsAdmin")]
+        [Authorize(Roles = "Admin")]
         public IActionResult Delete(int id)
         {
             var response = usersService.Delete(id);

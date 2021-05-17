@@ -29,7 +29,7 @@ namespace MyRecipes.Controllers
 
             _recipeLikesService.Remove(recipeId, userId);
 
-            return RedirectToAction("Overview", "Recipes");
+            return Ok();
         }
     }
 }

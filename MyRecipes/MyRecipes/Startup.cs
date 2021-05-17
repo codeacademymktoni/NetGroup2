@@ -46,19 +46,20 @@ namespace MyRecipes
                     }
                 );
 
-            services.AddAuthorization(options =>
-            {
-                options.AddPolicy("IsAdmin", policy =>
-                {
-                    policy.RequireClaim("IsAdmin", "True");
-                });
-            });
+            //services.AddAuthorization(options =>
+            //{
+            //    options.AddPolicy("IsAdmin", policy =>
+            //    {
+            //        policy.RequireClaim("IsAdmin", "True");
+            //    });
+            //});
 
             //configure options
             services.Configure<SidebarConfig>(Configuration.GetSection("SidebarConfig"));
 
             //register services
             services.AddControllersWithViews().AddRazorRuntimeCompilation();
+
             services.AddTransient<IRecipesService, RecipesService>();
             services.AddTransient<IAuthService, AuthService>();
             services.AddTransient<IUsersService, UsersService>();

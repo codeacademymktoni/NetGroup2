@@ -25,14 +25,14 @@
                         <div class="card-body">
                             <h5 class="card-title">@recipe.Title - @recipe.RecipeType</h5>
                             <p class="card-text">Views: @recipe.Views</p>
-                            <p class="card-text">Likes: @recipe.RecipeLikes.Count()</p>
+                            <p class="card-text">Likes: <span id="likesCounter">@recipe.RecipeLikes.Count()</span> </p>
                             @if (User.Identity.IsAuthenticated)
                             {
                                 if (recipe.RecipeLikes.Any(x => x.UserId == int.Parse(User.FindFirst("Id").Value)))
                                 {
-                                    <a asp-controller="RecipeLikes" asp-action="Remove" asp-route-recipeId="@recipe.Id">
+                                    <div onclick="removeLike(@recipe.Id)">
                                         <i class="fas fa-thumbs-up"></i>
-                                    </a>
+                                    </div>
                                 }
                                 else
                                 {
@@ -54,3 +54,25 @@
     </div>
 </div>
 
+
+@section Scripts{
+    <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+    <script>
+        function removeLike(id) {
+            console.log(id);
+            var url = "https://localhost:44350/RecipeLikes/Remove?recipeId=" + id;
+            console.log(url);
+
+            axios.get(url)
+                .then(function (response) {
+                    console.log("update view with changes");
+                    var counter = document.getElementById("likesCounter");
+                    var currentCount = parseInt(counter.innerHTML) - 1;
+                    counter.innerHTML = currentCount;
+                })
+                .catch(function (error) {
+                    console.log(error);
+                })
+        }
+    </script>
+}
