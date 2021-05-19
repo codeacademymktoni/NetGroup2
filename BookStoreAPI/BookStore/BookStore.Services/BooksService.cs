@@ -4,6 +4,7 @@ using BookStore.Services.Interfaces;
 using System;
 using System.Collections.Generic;
 using System.Text;
+using System.Threading.Tasks;
 
 namespace BookStore.Services
 {
@@ -16,9 +17,9 @@ namespace BookStore.Services
             _booksRepository = booksRepository;
         }
 
-        public bool Create(Book book)
+        public async Task<bool> CreateAsync(Book book)
         {
-            var dbBook = _booksRepository.GetByTitle(book.Title);
+            var dbBook = await _booksRepository.GetByTitleAsync(book.Title);
 
             if(dbBook == null)
             {

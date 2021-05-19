@@ -1,7 +1,9 @@
 ﻿using BookStore.Data.Interfaces;
 using BookStore.Models;
+using Microsoft.EntityFrameworkCore;
 using System.Collections.Generic;
 using System.Linq;
+using System.Threading.Tasks;
 
 namespace BookStore.Data
 {
@@ -36,9 +38,9 @@ namespace BookStore.Data
             return _dbContext.Books.FirstOrDefault(x => x.Id == id);
         }
 
-        public Book GetByTitle(string title)
+        public async Task<Book> GetByTitleAsync(string title)
         {
-            return _dbContext.Books.FirstOrDefault(x => x.Title.ToLower() == title.ToLower());
+            return await _dbContext.Books.FirstOrDefaultAsync(x => x.Title.ToLower() == title.ToLower());
         }
 
         public List<Book> GetWithFilters(string title, string author)

@@ -23,6 +23,7 @@ namespace BookStoreAdminDashboard.Controllers
         public async Task<IActionResult> Index(string successMessage)
         {
             var httpClient = new HttpClient();
+
             var httpResponse = await httpClient.GetAsync($"{BookStoreApiBaseUrl}/api/books");
 
             if (httpResponse.IsSuccessStatusCode) 

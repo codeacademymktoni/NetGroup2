@@ -1,9 +1,10 @@
 ﻿using BookStore.Models;
+using System.Threading.Tasks;
 
 namespace BookStore.Data.Interfaces
 {
     public interface IApplicationsRepository
     {
-        Application GetByApiKey(string apiKey);
+        Task<Application> GetByApiKeyAsync(string apiKey);
     }
 }

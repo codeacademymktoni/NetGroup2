@@ -27,7 +27,7 @@ namespace BookStore.Custom
         }
 
         protected override async Task<AuthenticateResult> HandleAuthenticateAsync()
-        {
+         {
             if (!Request.Headers.ContainsKey("Authorization"))
             {
                 return AuthenticateResult.NoResult();
@@ -45,7 +45,7 @@ namespace BookStore.Custom
 
             var apiKey = headerValue.Parameter;
 
-            var application = _applicationsRepository.GetByApiKey(apiKey);
+            var application = await _applicationsRepository.GetByApiKeyAsync(apiKey);
 
             if(application != null)
             {

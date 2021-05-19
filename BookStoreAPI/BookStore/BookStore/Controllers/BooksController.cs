@@ -5,6 +5,7 @@ using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using System.Linq;
+using System.Threading.Tasks;
 
 namespace BookStore.Controllers
 {
@@ -56,12 +57,13 @@ namespace BookStore.Controllers
         /// <returns></returns>
         [HttpPost]
         [Authorize]
-        public IActionResult Create(BookDto book)
+        public async Task<IActionResult> Create(BookDto book)
         {
             var user = User;
             if (ModelState.IsValid)
             {
-                var status = _booksService.Create(book.ToDomainModel());
+                var status = await _booksService.CreateAsync(book.ToDomainModel());
+
                 if (status)
                 {
                     return Ok();

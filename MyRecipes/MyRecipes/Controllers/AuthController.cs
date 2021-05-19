@@ -2,6 +2,7 @@
 using MyRecipes.Mappings;
 using MyRecipes.Services.Interfaces;
 using MyRecipes.ViewModels;
+using System.Threading.Tasks;
 
 namespace MyRecipes.Controllers
 {
@@ -20,12 +21,11 @@ namespace MyRecipes.Controllers
         }
 
         [HttpPost]
-        public IActionResult SignIn(SignInModel signInModel, string returnUrl)
+        public async Task<IActionResult> SignIn(SignInModel signInModel, string returnUrl)
         {
             if (ModelState.IsValid)
             {
-                
-                var response = _authService.SignIn(signInModel.Username, signInModel.Password, signInModel.IsPersistent, HttpContext);
+                var response = await _authService.SignInAsync(signInModel.Username, signInModel.Password, signInModel.IsPersistent, HttpContext);
 
                 if (response.IsSuccessful)
                 {

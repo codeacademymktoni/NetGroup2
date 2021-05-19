@@ -1,6 +1,7 @@
 ﻿
 using BookStore.Models;
 using System.Collections.Generic;
+using System.Threading.Tasks;
 
 namespace BookStore.Data.Interfaces
 {
@@ -11,7 +12,7 @@ namespace BookStore.Data.Interfaces
         void Update(Book book);
         Book GetById(int id);
         void Delete(Book book);
-        Book GetByTitle(string title);
+        Task<Book> GetByTitleAsync(string title);
         List<Book> GetWithFilters(string title, string author);
     }
 }

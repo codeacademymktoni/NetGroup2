@@ -21,13 +21,14 @@ namespace MyRecipes.Services
             _usersRepository = usersRepository;
         }
 
-        public StatusModel SignIn(string username, string password, bool isPersistent, HttpContext httpContext) 
+        public async Task<StatusModel> SignInAsync(string username, string password, bool isPersistent, HttpContext httpContext) 
         {
             var response = new StatusModel();
             var user = _usersRepository.GetByUsername(username);
 
             if(user != null && BCrypt.Net.BCrypt.Verify(password, user.Password))
             {
+                var dict = new Dictionary<string, string>();
                 var claims = new List<Claim>()
                 {
                     new Claim("Id", user.Id.ToString()),
@@ -47,7 +48,7 @@ namespace MyRecipes.Services
 
                 var authProps = new AuthenticationProperties() { IsPersistent = isPersistent };
 
-                Task.Run(() => httpContext.SignInAsync(principal, authProps)).GetAwaiter().GetResult();
+                await httpContext.SignInAsync(principal, authProps);
             }
             else
             {

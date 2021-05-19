@@ -1,9 +1,11 @@
 ﻿using BookStore.Data.Interfaces;
 using BookStore.Models;
+using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using System.Threading.Tasks;
 
 namespace BookStore.Data
 {
@@ -16,9 +18,9 @@ namespace BookStore.Data
             _context = context;
         }
 
-        public Application GetByApiKey(string apiKey)
+        public async Task<Application> GetByApiKeyAsync(string apiKey)
         {
-            return _context.Applications.FirstOrDefault(x => x.Key == apiKey);
+            return await _context.Applications.FirstOrDefaultAsync(x => x.Key == apiKey);
         }
     }
 }
