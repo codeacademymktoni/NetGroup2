@@ -91,7 +91,7 @@ function getWithFilter() {
 function renderCards(authorInput = "", titleInput = ""){
   var loader = document.getElementById("loader");
   loader.style.display = "block";
-  axios.get(`https://localhost:44308/api/books?author=${authorInput}&title=${titleInput}`)
+  axios.get(`https://bookstoreapica.azurewebsites.net/api/books?author=${authorInput}&title=${titleInput}`)
   .then(function (response) {
     document.getElementById("card-container").innerHTML = "";
     for (let i = 0; i < response.data.length; i++) {

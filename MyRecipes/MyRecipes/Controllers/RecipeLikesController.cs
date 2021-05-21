@@ -20,7 +20,7 @@ namespace MyRecipes.Controllers
 
             _recipeLikesService.Add(recipeId, userId);
 
-            return RedirectToAction("Overview", "Recipes");
+            return Ok();
         }
 
         public IActionResult Remove(int recipeId)

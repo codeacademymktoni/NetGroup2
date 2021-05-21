@@ -17,9 +17,9 @@ namespace MyRecipes.Services
             _recipesService = recipesService;
         }
 
-        public StatusModel Add(string comment, int recipeId, int userId)
+        public AddCommentResponse Add(string comment, int recipeId, int userId)
         {
-            var response = new StatusModel();
+            var response = new AddCommentResponse();
 
             var recipe = _recipesService.GetRecipeById(recipeId);
 
@@ -34,11 +34,13 @@ namespace MyRecipes.Services
                 };
 
                 _commentsRepository.Add(newComment);
+
+                response.Comment = newComment;
             }
             else
             {
-                response.IsSuccessful = false;
-                response.Message = $"The recipe with Id {recipeId} was not found";
+                response.Status.IsSuccessful = false;
+                response.Status.Message = $"The recipe with Id {recipeId} was not found";
             }
 
             return response;

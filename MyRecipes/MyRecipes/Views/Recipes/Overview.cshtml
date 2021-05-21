@@ -25,20 +25,20 @@
                         <div class="card-body">
                             <h5 class="card-title">@recipe.Title - @recipe.RecipeType</h5>
                             <p class="card-text">Views: @recipe.Views</p>
-                            <p class="card-text">Likes: <span id="likesCounter">@recipe.RecipeLikes.Count()</span> </p>
+                            <p class="card-text">Likes: <span id="likesCounter_@recipe.Id">@recipe.RecipeLikes.Count()</span> </p>
                             @if (User.Identity.IsAuthenticated)
                             {
                                 if (recipe.RecipeLikes.Any(x => x.UserId == int.Parse(User.FindFirst("Id").Value)))
                                 {
-                                    <div onclick="removeLike(@recipe.Id)">
-                                        <i class="fas fa-thumbs-up"></i>
+                                    <div onclick="removeLike(@recipe.Id, this)">
+                                        <i class="fas fa-thumbs-up" style="color:blue"></i>
                                     </div>
                                 }
                                 else
                                 {
-                                    <a asp-controller="RecipeLikes" asp-action="Add" asp-route-recipeId="@recipe.Id">
-                                        <i class="far fa-thumbs-up"></i>
-                                    </a>
+                                    <div onclick="addLike(@recipe.Id, this)">
+                                        <i class="far fa-thumbs-up" style="color:blue"></i>
+                                    </div>
                                 }
                             }
                             <div class="card-text recipeDescription">@recipe.Description</div>
@@ -58,17 +58,38 @@
 @section Scripts{
     <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
     <script>
-        function removeLike(id) {
-            console.log(id);
+        function removeLike(id, btn) {
             var url = "https://localhost:44350/RecipeLikes/Remove?recipeId=" + id;
-            console.log(url);
-
             axios.get(url)
                 .then(function (response) {
-                    console.log("update view with changes");
-                    var counter = document.getElementById("likesCounter");
+                    var counter = document.getElementById("likesCounter_" + id);
                     var currentCount = parseInt(counter.innerHTML) - 1;
                     counter.innerHTML = currentCount;
+
+                    var icon = btn.getElementsByTagName('i')[0];
+                    icon.classList.remove('fas');
+                    icon.classList.add('far');
+
+                    btn.onclick = function () { addLike(id, btn) };
+                })
+                .catch(function (error) {
+                    console.log(error);
+                })
+        }
+
+        function addLike(id, btn) {
+            var url = "https://localhost:44350/RecipeLikes/Add?recipeId=" + id;
+            axios.get(url)
+                .then(function (response) {
+                    var counter = document.getElementById("likesCounter_" + id);
+                    var currentCount = parseInt(counter.innerHTML) + 1;
+                    counter.innerHTML = currentCount;
+
+                    var icon = btn.getElementsByTagName('i')[0];
+                    icon.classList.remove('far');
+                    icon.classList.add('fas');
+
+                    btn.onclick = function () { removeLike(id, btn) };
                 })
                 .catch(function (error) {
                     console.log(error);

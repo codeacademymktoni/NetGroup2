@@ -35,27 +35,30 @@
 
         @if (User.Identity.IsAuthenticated)
         {
-            <form asp-controller="Comments" asp-action="Add" method="post" onsubmit="return validateForm()">
+            <div>
                 <input type="text" name="recipeId" value="@Model.RecipeDetails.Id" hidden />
                 <div class="form-group">
-                    <textarea type="text" id="comment" name="comment" class="form-control" cols="20" rows="5" required></textarea>
+                    <textarea type="text" id="commentInput" name="comment" class="form-control" cols="20" rows="5" required></textarea>
                 </div>
-                <button type="submit" class="btn btn-primary">Comment</button>
-            </form>
-        }
-
-        @foreach (var comment in Model.RecipeDetails.Comments.OrderByDescending(x => x.DateCreated))
-        {
-            <div class="comment">
-                <p>@comment.Message</p>
-                <p>User: @comment.Username</p>
-                <p>Date created: @comment.DateCreated</p>
-                @if (User.Identity.IsAuthenticated && User.FindFirst("Username").Value == comment.Username)
-                {
-                    <a href="/Comments/Delete/@comment.Id">Delete</a>
-                }
+                <button type="submit" class="btn btn-primary" onclick="addComment(@Model.RecipeDetails.Id)">Comment</button>
             </div>
         }
+
+        <div id="commentContainer">
+            @foreach (var comment in Model.RecipeDetails.Comments.OrderByDescending(x => x.DateCreated))
+            {
+                <div class="comment">
+                    <p>@comment.Message</p>
+                    <p>User: @comment.Username</p>
+                    <p>Date created: @comment.DateCreated</p>
+                    @if (User.Identity.IsAuthenticated && User.FindFirst("Username").Value == comment.Username)
+                    {
+                        <a href="/Comments/Delete/@comment.Id">Delete</a>
+                    }
+                </div>
+            }
+        </div>
+
     </div>
     <div class="col-md-3">
         <partial name="SidebarPartial" for="@Model.SidebarData">
@@ -64,4 +67,67 @@
 
 @section Scripts{
     <script src="~/js/validator.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+    <script>
+        function addComment(recipeId) {
+            var commentInput = document.getElementById("commentInput");
+            var comment = commentInput.value;
+
+            if (comment != null || comment.trim() != "") {
+                var data = {
+                    RecipeId: recipeId,
+                    Comment: comment
+                };
+
+                var url = "https://localhost:44350/Comments/Add";
+                axios.post(url, data)
+                    .then(function (response) {
+                        commentInput.value = "";
+                        createCommentCard(response);
+                    })
+                    .catch(function (error) {
+                        console.log(error);
+                    })
+            } else {
+                alert("comment is needed");
+            }
+        }
+
+        function createCommentCard(response) {
+            var commentDiv = document.createElement("div");
+            commentDiv.classList.add("comment");
+
+            var commentElement = document.createElement("p");
+            commentElement.innerHTML = response.data.message;
+
+            var commentUser = document.createElement("p");
+            commentUser.innerHTML = "User: " + response.data.username;
+
+            var commentDateCreated = document.createElement("p");
+            commentDateCreated.innerHTML = "Date created: " + response.data.dateCreated;
+
+            var commentDeleteButton = document.createElement("a");
+            commentDeleteButton.innerHTML = "Delete";
+            commentDeleteButton.href = "/Comments/Delete/" + response.data.id;
+
+            commentDiv.appendChild(commentElement);
+            commentDiv.appendChild(commentUser);
+            commentDiv.appendChild(commentDateCreated);
+            commentDiv.appendChild(commentDeleteButton);
+
+            var commentContainer = document.getElementById("commentContainer");
+            commentContainer.insertBefore(commentDiv, commentContainer.firstChild);
+        }
+
+        function startUpdate(commentId, elementClicked) {
+            var message = elementClicked.innerHTML;
+            var parent = elementClicked.parentNode;
+            elementClicked.remove();
+
+            var input = document.createElement("input");
+            input.value = message;
+
+            parent.appendChild(input);
+        }
+    </script>
 }

@@ -5,7 +5,7 @@ namespace MyRecipes.Services.Interfaces
 {
     public interface ICommentsService
     {
-        StatusModel Add(string comment, int recipeId, int userId);
+        AddCommentResponse Add(string comment, int recipeId, int userId);
         Comment GetById(int id);
         void Delete(Comment comment);
     }

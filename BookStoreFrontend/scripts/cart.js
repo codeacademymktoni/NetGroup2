@@ -3,7 +3,7 @@ function initCart() {
 
     cartItems.forEach(x => {
         console.log(x);
-        axios.get(`https://localhost:44308/api/books/${x}`)
+        axios.get(`https://bookstoreapica.azurewebsites.net/api/books/${x}`)
             .then(function (response) {
                 createCartItem(response.data);
             })
@@ -62,7 +62,7 @@ function orderBooks() {
         bookIds: bookIds
     }
 
-    axios.post("https://localhost:44308/api/orders", data)
+    axios.post("https://bookstoreapica.azurewebsites.net/api/orders", data)
         .then(function (response) {
             alert(`Thanks for ordering`);
             localStorageService.clear("cartItems");

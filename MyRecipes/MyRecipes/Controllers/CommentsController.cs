@@ -1,5 +1,6 @@
 ﻿using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using MyRecipes.Mappings;
 using MyRecipes.Services.Interfaces;
 using MyRecipes.ViewModels;
 
@@ -15,19 +16,19 @@ namespace MyRecipes.Controllers
 
         [HttpPost]
         [Authorize]
-        public IActionResult Add(CommentCreateModel commentCreateModel)
+        public IActionResult Add([FromBody]CommentCreateRequestModel commentCreateModel)
         {
             var userId = int.Parse(User.FindFirst("Id").Value);
 
             var response = _commentsService.Add(commentCreateModel.Comment, commentCreateModel.RecipeId, userId);
 
-            if (response.IsSuccessful)
+            if (response.Status.IsSuccessful)
             {
-                return RedirectToAction("Details", "Recipes", new { id = commentCreateModel.RecipeId });
+                return Ok(response.Comment.ToCommentModel());
             }
             else
             {
-                return RedirectToAction("ActionNonSuccessful", "Info", new { Message = response.Message });
+                return BadRequest(new { Message = response.Status.Message });
             }
         }
 
